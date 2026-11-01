@@ -15,14 +15,71 @@ import json
 import pathlib
 import re
 import sys
+import unicodedata
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LEVEL = {"ok": 0, "caution": 1, "violation": 2}
-ARTICLE = re.compile(r"第[0-9０-９]+条(?:の[0-9０-９]+)*|제\d+조(?:의\d+)?|第3-\d+ ?\d?\(?\d*\)?")
+KANJI = {"〇": 0, "一": 1, "二": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+SEP = r"[·・,、]\s*"
+JP_ART = re.compile(r"第(\d+)条((?:の\d+)*)(?:第(\d+)項)?(?:第(\d+)号((?:" + SEP + r"第\d+号)*))?")
+KR_ART = re.compile(r"제(\d+)조(?:의(\d+))?(?:제(\d+)항)?(?:제(\d+)호((?:" + SEP + r"제\d+호)*))?")
+GL_ITEM = re.compile(r"第3-(\d+)(?:\s*(\d+))?(?:\s*\((\d+)\))?((?:" + SEP + r"\d+\s*\(\d+\))*)")
+
+
+def kanji_to_int(s):
+    """六十八 → 68, 百二十 → 120. 한자 숫자 한 덩어리를 정수로 바꾼다."""
+    total, num = 0, 0
+    for ch in s:
+        if ch == "百":
+            total += (num or 1) * 100; num = 0
+        elif ch == "十":
+            total += (num or 1) * 10; num = 0
+        else:
+            num = KANJI[ch]
+    return total + num
+
+
+def normalize(rule):
+    """전각 숫자·원문자(②)를 반각으로, 한자 숫자를 아라비아 숫자로 바꾼다."""
+    s = unicodedata.normalize("NFKC", rule or "")
+    return re.sub(r"[〇一二三四五六七八九十百]+", lambda m: str(kanji_to_int(m.group())), s)
 
 
 def articles(rule):
-    return {a.replace(" ", "") for a in ARTICLE.findall(rule or "")}
+    """rule 문자열에서 조문 키를 뽑는다. 항·호까지 살린다.
+    医療法 第六条の五第二項第一号 → 条6の5-2-1 / 의료법 제56조제2항제14호 → 조56-2-14
+    医療広告等ガイドライン 第3-1 1(5) → GL3-1-1-5
+    """
+    s = normalize(rule)
+    keys = set()
+
+    def add(head, parts, listed):
+        """listed: 「·제8호」「・1(8)」처럼 같은 상위 번호 아래 나열된 하위 번호"""
+        parts = [x for x in parts if x]
+        keys.add("-".join([head] + parts))
+        for extra in re.findall(r"\d+(?:\s*\(\d+\))?", listed or ""):
+            nums = re.findall(r"\d+", extra)
+            keys.add("-".join([head] + parts[:-len(nums)] + nums) if len(parts) >= len(nums) else "-".join([head] + nums))
+
+    for m in JP_ART.finditer(s):
+        add("条" + m.group(1) + m.group(2), m.group(3, 4), m.group(5))
+    for m in KR_ART.finditer(s):
+        add("조" + m.group(1) + (f"의{m.group(2)}" if m.group(2) else ""), m.group(3, 4), m.group(5))
+    for m in GL_ITEM.finditer(s):
+        add("GL3", (m.group(1),) + m.group(2, 3), m.group(4))
+    return keys
+
+
+def article_match(gold_rule, pred_rule):
+    """조문 키가 하나라도 맞으면 일치. 한쪽이 더 세밀하면 상위 번호가 같을 때 일치로 본다.
+    예: 정답 条68 / 예측 条68-1 → 일치, 정답 조56-2-14 / 예측 조56-2-2 → 불일치
+    한계: 법령명은 보지 않는다 (의료법 제27조와 약사법 제27조를 구분하지 못함).
+    """
+    for g in articles(gold_rule):
+        for p in articles(pred_rule):
+            if g == p or g.startswith(p + "-") or p.startswith(g + "-"):
+                return True
+    return False
 
 
 def span_match(gold, pred):
@@ -75,7 +132,7 @@ def score(golden, preds):
             if hit:
                 span_hit += 1
                 per_cat[gf["category"]][0] += 1
-                if articles(gf["rule"]) & articles(hit["rule"]):
+                if article_match(gf["rule"], hit["rule"]):
                     rule_hit += 1
             else:
                 misses.append((g["id"], gf["country"], gf["category"], gf["span"]))

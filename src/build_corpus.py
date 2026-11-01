@@ -49,7 +49,13 @@ def jp_articles(rel, numbers):
             raise SystemExit(f"{rel}: Article {num} 없음")
         caption = "".join(art.findtext("ArticleCaption") or "")
         title = art.findtext("ArticleTitle") or ""
-        body = "\n".join("".join(s.itertext()) for s in art.iter("Sentence"))
+        lines = []
+        for para in art.iter("Paragraph"):  # 項 번호(②)와 号 번호(二)를 살려야 모델이 조문을 정확히 인용한다
+            num = para.findtext("ParagraphNum") or ""
+            lines.append(f"{num} " + "".join("".join(s.itertext()) for s in para.find("ParagraphSentence").iter("Sentence")))
+            for item in para.findall("Item"):
+                lines.append(f"  {item.findtext('ItemTitle') or ''} " + "".join("".join(s.itertext()) for s in item.find("ItemSentence").iter("Sentence")))
+        body = "\n".join(l.strip() for l in lines)
         blocks.append(f"{title}{caption}\n{body}")
     return "\n\n".join(blocks)
 
