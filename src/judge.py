@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CORPUS = ROOT / "data/corpus/core.md"
-GUIDE = ROOT / "eval/labeling-guide.md"
+POLICY = ROOT / "docs/policy.md"
 
 
 class Finding(BaseModel):
@@ -36,7 +36,7 @@ K-Beauty（韓国の美容医療を日本居住者に紹介するサービス、
 韓国の医療機関が登録した施術の「タイトル」と「説明」を審査します。
 
 # 判定ルール
-以下の「라벨링 가이드」が判定基準です。必ずこの基準に従ってください（会社決定事項、カテゴリ、境界事例を含む）。
+以下の「판정 기준 (policy)」が判定基準です。必ずこの基準に従ってください（会社決定事項、カテゴリ、境界事例を含む）。
 - 日本・韓国の両方の基準で審査する。同じ表現が両国に該当する場合は finding を国ごとに分けて書く。
 - 該当がなければ verdict=ok、findings=[]。
 - verdict は findings の severity の最大値（violation > caution > ok）。
@@ -45,8 +45,8 @@ K-Beauty（韓国の美容医療を日本居住者に紹介するサービス、
 - source_file には根拠資料の各セクション先頭にある source_file の値をそのまま書く。
 - suggestion は元の文言と同じ言語で、違反にならない言い換えを書く。
 
-# 라벨링 가이드
-{guide}
+# 판정 기준 (policy)
+{policy}
 
 # 根拠資料
 以下に法令・ガイドライン・事例集の本文を示す。
@@ -54,7 +54,7 @@ K-Beauty（韓国の美容医療を日本居住者に紹介するサービス、
 
 
 def system_text() -> str:
-    return SYSTEM.format(guide=GUIDE.read_text())
+    return SYSTEM.format(policy=POLICY.read_text())
 
 
 def corpus_content() -> types.Content:
