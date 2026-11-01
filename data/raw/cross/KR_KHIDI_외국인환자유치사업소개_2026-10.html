@@ -1,0 +1,1746 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html><html lang="ko" class="no-js">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="content-language" content="kr" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- 2025 01 21 jmw -->
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" /> -->
+<meta name="format-detection" content="telephone=no" />
+<meta name="title" content="MEDICALKOREA :: 외국인환자유치 정보시스템" />
+<meta name="description" content="MEDICALKOREA :: 외국인환자유치 정보시스템" />
+<meta name="copyright" content="MEDICALKOREA :: 외국인환자유치 정보시스템" />
+<title>MEDICALKOREA :: 외국인환자유치 정보시스템</title>
+
+<link rel="stylesheet" href="/korp/mk/css/normalize-4.1.1.custom.css" />
+<!-- 2025 02 21 jmw -->
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-runtime.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-events.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/,'js');</script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="../js/lib/modernizr-custom.min.js"></script> <!-- 수정!!  -->
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" defer src="/korp/mk/js/custom.js"></script>
+<!--[if (gte IE 6)&(lte IE 8)]>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="../js/lib/jquery-1.11.2.min.js"></script>
+<![endif]-->
+<!--[if (gt IE 8)|!(IE)]> <!--> <script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/lib/jquery-2.1.3.min.js"></script> <!--<![endif]-->
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')</script>
+<style type="text/css">
+<!--
+-->
+</style>
+</head>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<!-- <h2 class="sr-only">{{ 헤더 영역 }}</h2> -->
+
+
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="content-language" content="kr" />
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" /><!-- 2025 01 21 jmw -->
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="title" content="MEDICALKOREA :: 외국인환자유치 정보시스템" />
+	<meta name="description" content="MEDICALKOREA :: 외국인환자유치 정보시스템" />
+	<meta name="copyright" content="MEDICALKOREA :: 외국인환자유치 정보시스템" />
+	<title>MEDICALKOREA :: 외국인환자유치 정보시스템</title>
+
+
+	<!-- et css -->
+	<link rel="stylesheet" href="/korp/et/resource/www/js/plugins/animate.css" >
+	<link rel="stylesheet" href="/korp/et/resource/www/js/plugins/swiper-bundle.min.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/js/plugins/aos.css">
+
+	<link rel="stylesheet" href="/korp/et/resource/www/css/style.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/style_202106.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/style_custom.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/style_custom_2.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/style_custom_202208.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/css2.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/normalize-4.1.1.custom.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/main.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/component.css">
+	<link rel="stylesheet" href="/korp/et/resource/www/css/content.css">
+	<!-- //css -->
+
+	<!-- et script -->
+
+	<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-runtime.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-events.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/et/resource/www/js/jquery.easing.1.3.js"></script>
+	<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/et/resource/www/js/plugins/aos.js"></script>
+	<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/et/resource/www/js/plugins/gsap.min.js"></script>
+	<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/et/resource/www/js/plugins/ScrollTrigger.min.js"></script>
+	<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/et/resource/www/js/common.js"></script>
+	<!-- ///et script -->
+
+</head>
+
+
+<div id="regionInquiry" class="modal">
+	<div class="modal-container">
+		<div class="table">
+			<div class="cell">
+				<div class="modal-holder" style="width:85%;height:800px;overflow-y: scroll;">
+					<div class="modal-head">
+						<h2>관할 시도 문의처</h2>
+					</div>
+					<div class="body" style="margin: 20px;">
+						<p class="dec">외국인환자 유치기관 등록 등 사무 민원 문의는 지자체별로 아래와 같습니다.</p>
+						<div id="agencyStateData2">
+							<p>&nbsp;<br/><br/></p>
+						</div>
+					</div>
+					<a href="#" data-mk-onclick="9d4beda8de38-0" class="js-modal-close"><i class="icon"><em>지역별 민원 문의 닫기</em></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- // regionInquiry -->
+
+
+<body class="sub_page">
+
+<div class="snavi_box">
+	<a href="#main-visual" class="skip_nav">본문영역 바로가기</a>
+	<a href="#gnb-box" class="skip_nav">메인메뉴 바로가기</a>
+	<a href="#footer" class="skip_nav">하단링크 바로가기</a>
+</div>
+<!-- wrap -->
+<div class="fixed-wrap">
+	<div class="top-head">
+		<div class="inner-padding">
+			<ul>
+				
+					
+					
+						<li><a href="/korp/login.do">로그인</a></li>
+						<li><a href="/korp/join/type.do">회원가입</a></li>
+					
+				
+				<li><a href="#" data-mk-onclick="9d4beda8de38-2">등록기관조회</a></li>
+				<li><a href="#" data-mk-onclick="9d4beda8de38-3">유치기관현황</a></li>
+				<li><a href="#" data-mk-onclick="9d4beda8de38-4">평가인증기관현황</a></li>
+			</ul>
+		</div>
+	</div>
+	<header id="exit-header">
+		<!-- thead -->
+		<div class="thead">
+			<!-- logo -->
+			<h1 class="logo"><a href="/korp/main.do" title="외국인환자유치 정보시스템 메인페이지로 이동">MEDICALKOREA 외국인환자유치 정보시스템</a></h1>
+			<!-- //logo -->
+			<!-- gnb_box -->
+			<nav class="gnb-box" id="gnb-box">
+				<h2 class="hide">주요메뉴</h2>
+				<ul class="gnb" id="gnb">
+					<li>
+						<a href="/korp/intro/intro.do" class="gnb-title">사업소개</a>
+						<div class="lnb-wrap">
+							<div class="lnb-inner">
+								<div class="lf">
+									<strong>사업소개</strong>
+								</div>
+								<ul class="lnb-list1">
+									<li><a href="/korp/intro/intro.do">외국인환자유치 사업소개</a></li>
+									<li><a href="/korp/intro/registration.do">외국인환자유치기관 등록제도</a></li>
+									<li><a href="/korp/intro/report.do">외국인환자유치 사업실적 보고</a></li>
+									<li><a href="/korp/intro/evaluation.do">유치의료기관 평가인증제도</a></li>
+									<li><a href="/korp/intro/mainStat.do">외국인환자 유치실적 통계</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li>
+						<a href="/korp/register/type.do" class="gnb-title">유치기관 관리</a>
+						<div class="lnb-wrap">
+							<div class="lnb-inner">
+								<div class="lf">
+									
+										
+										
+											<strong>유치기관 등록</strong>
+										
+									
+								</div>
+								<ul class="lnb-list1">
+									
+										
+										
+											<li><a href="/korp/register/type.do">유치기관 등록신청</a></li>
+										
+									
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li>
+						<a href="#" class="gnb-title" data-mk-onclick="9d4beda8de38-5">실적보고</a>
+						<div class="lnb-wrap">
+							<div class="lnb-inner">
+								<div class="lf">
+									<strong>실적보고</strong>
+								</div>
+								<ul class="lnb-list1">
+									<li><a href="#" data-mk-onclick="9d4beda8de38-6">진행중인 실적보고</a></li>
+									<li><a href="/korp/report/pre.do">이전 실적보고 조회</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li>
+						<a href="/korp/prepost/intro.do" class="gnb-title">사전사후 관리보고</a>
+						<div class="lnb-wrap">
+							<div class="lnb-inner">
+								<div class="lf">
+									<strong>사전사후관리보고</strong>
+								</div>
+								<ul class="lnb-list1">
+									<li><a href="/korp/prepost/intro.do">사전사후관리 사업안내</a></li>
+									
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li>
+						<a href="/korp/cert/intro.do" class="gnb-title">유치의료기관 평가인증 관리</a>
+						<div class="lnb-wrap">
+							<div class="lnb-inner">
+								<div class="lf">
+									<strong>유치의료기관평가인증 관리</strong>
+								</div>
+								<ul class="lnb-list1">
+									<li><a href="/korp/cert/intro.do">유치의료기관평가인증 안내</a></li>
+									
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li>
+						<a href="/korp/notice/newsList.do" class="gnb-title">알림마당</a>
+						<div class="lnb-wrap">
+							<div class="lnb-inner">
+								<div class="lf">
+									<strong>알림마당</strong>
+								</div>
+								<ul class="lnb-list1">
+									<li><a href="/korp/notice/newsList.do">뉴스 & 공지</a></li>
+									<li><a href="/korp/notice/scheduleList.do">일정 알림</a></li>
+									<li><a href="/korp/notice/infoList.do">정보자료실</a></li>
+									<li><a href="/korp/notice/faqList.do">FAQ</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</nav>
+			<!-- //gnb_box -->
+			<a href="#" class="smo-btn"><i></i><span class="hide">사이트맵 열기</span></a>
+			<div class="smo-bg"></div>
+			<div class="smo-list">
+				<div class="smo-list-wrap">
+					<h1><a href="/korp/main.do">외국인환자유치정보시스템</a></h1>
+					<ul>
+						<li><a href="/korp/intro/intro.do">사업소개</a>
+							<ul>
+								<li><a href="/korp/intro/intro.do">외국인환자유치 사업소개</a></li>
+								<li><a href="/korp/intro/registration.do">외국인환자유치기관 등록제도</a></li>
+								<li><a href="/korp/intro/report.do">외국인환자유치 사업실적 보고</a></li>
+								<li><a href="/korp/intro/evaluation.do">유치의료기관 평가인증제도</a></li>
+							</ul>
+						</li>
+						<li><a href="/korp/register/type.do">유치기관 관리</a>
+							<ul>
+								
+									
+									
+										<li><a href="/korp/register/type.do">유치기관 등록신청</a></li>
+									
+								
+							</ul>
+						</li>
+						<li><a href="#" data-mk-onclick="9d4beda8de38-7">실적보고</a>
+							<ul>
+								<li><a href="#" data-mk-onclick="9d4beda8de38-8">진행중인 실적보고</a></li>
+								<li><a href="/korp/report/pre.do">이전 실적보고 조회</a></li>
+							</ul>
+						</li>
+						<li><a href="/korp/prepost/intro.do">사전사후관리보고</a>
+							<ul>
+								<li><a href="/korp/prepost/intro.do">사전사후관리 사업안내</a></li>
+								
+							</ul>
+						</li>
+						<li><a href="/korp/cert/intro.do">유치의료기관평가인증 관리</a>
+							<ul>
+								<li><a href="/korp/cert/intro.do">유치의료기관평가인증 안내</a></li>
+								
+							</ul>
+						</li>
+						<li><a href="/korp/notice/newsList.do">알림마당</a>
+							<ul>
+								<li><a href="/korp/notice/newsList.do">뉴스 & 공지</a></li>
+								<li><a href="/korp/notice/scheduleList.do">일정 알림</a></li>
+								<li><a href="/korp/notice/infoList.do">정보자료실</a></li>
+								<li><a href="/korp/notice/faqList.do">FAQ</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="mbtn-box">
+				<a href="#none" class="open"><i></i><span class="hide">모바일 메뉴 열기</span></a>
+				<div class="mgnb-con">
+					<div class="mgnb-box">
+						<div class="top">
+							<h3 class="logo"><a href="/korp/main.do"><img src="/korp/et/resource/www/img/layout/logo-wh.svg" alt="외국인환자 유치 플랫폼 로고"></a></h3>
+							<button type="button" class="close">모바일 메뉴 닫기</button>
+						</div>
+						<div class="mid">
+							<ul>
+								<!-- 로그인 했을때, 보여줍니다. -->
+								
+									
+									
+										<li><a href="/korp/login.do" class="login"><i></i>로그인</a></li>
+										<li><a href="/korp/join/type.do" class="signup"><i></i>회원가입</a></li>
+									
+								
+							</ul>
+						</div>
+						<div class="mgnb"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- //thead -->
+	</header>
+</div>
+
+
+<div id="agencySearch" class="modal">
+	
+
+
+<div class="modal-container">
+	<div class="table">
+		<div class="cell">
+			
+			<div class="modal-holder">
+
+				<div class="modal-head">
+					<h2>등록기관 조회</h2>
+				</div>
+
+
+
+				<div class="body st3">
+					
+					<div class="info_txt st2">
+                     	<p class="">조회하실 기관의 사업자등록번호를 입력해 주세요.</p>
+                    </div>
+																								
+<!-- 					<div class="p_form st1"> -->
+<!-- 						<label for="businessNumber1">사업자등록번호</label> -->
+<!-- 						<input type="text" class="text" id="businessNumber1" style="width: 80px" placeholder="000" maxlength="3"/> -->
+<!-- 						<span>-</span> -->
+<!-- 						<input type="text" class="text" id="businessNumber2" placeholder="00" maxlength="2"/> -->
+<!-- 						<span>-</span> -->
+<!-- 						<input type="text" class="text" id="businessNumber3" placeholder="00000" maxlength="5"/>						 -->
+<!-- 					</div> -->
+					
+					<div class="inp-box">
+							<div class="inp-wrap">
+								<label for="businessNumber1" class="hide">첫번째 3자리 입력</label>
+								<input type="text" class="text" id="businessNumber1" placeholder="000" maxlength="3"/>
+								-
+								<label for="businessNumber2" class="hide">가운데 2자리 입력</label>
+								<input type="text" class="text" id="businessNumber2" placeholder="00" maxlength="2"/>
+								-
+								<label for="businessNumber3" class="hide">마지막 다섯자리 입력</label>
+								<input type="text" class="text" id="businessNumber3" placeholder="00000" maxlength="5"/>
+							</div>
+							<button type="button" data-mk-onclick="351c8f8385c8-0" class="green1">등록기관 조회</button>
+						</div>
+
+<!-- 					<div> -->
+<!-- 						<div class="pop_btn_wrap st2"> -->
+<!-- 							<a href="javascript:void(0);" onclick="javascript:fnAgencySearch();return false;" class="green1">등록기관 조회</a> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+									
+
+
+
+					<div class="search-result" style="display:none">
+						<!-- 결과 없음 -->
+						<div class="result_txt st1" style="display:none">
+							<p class="">입력하신 사업자등록번호와 일치하는 기업정보가 없습니다.</p>
+							
+						</div><!-- // 결과 없음 -->
+
+
+						<!-- 결과 있음 -->
+						<div class="result_txt st2" style="display:none">
+							<p id="orgDesc"></p>
+						</div>						
+						
+						<div class="table-p table-col" style="display:none">
+							<table style="border-top: 1px solid #b9b9b9">
+		                        <colgroup>
+		                            <col style="width: 120px;" />
+		                            <col style="width: *;" />
+		                        </colgroup>
+		                        <tbody>
+		                            <tr>
+		                                <th>상호명</th>
+		                                <td id="agencyCorporateName"></td>
+		                            </tr>
+		                            <tr>
+		                                <th>구분</th>
+		                                <td id="agencyType"></td>
+		                            </tr>
+		                            <tr>
+		                                <th>사업자등록번호</th>
+		                                <td id="agencyBusinessNumber"></td>
+		                            </tr>
+		                            <tr>
+		                                <th>주소</th>
+		                                <td id="agencyAddress"></td>
+		                            </tr>
+		                        </tbody>
+	                    	</table>
+						</div>
+						<!-- 결과 있음 -->					
+						
+					</div>
+
+				</div>
+
+
+
+				<a href="#" data-mk-onclick="351c8f8385c8-1" class="js-modal-close"><i class="icon"><em>유지등록기관 조회 닫기</em></i></a>
+				
+			</div>
+
+		</div>
+	</div>
+</div>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-runtime.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-events.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/commonUtil.js"></script>
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">
+	function fnAgencySearch(){
+		if(isEmpty($("#businessNumber1").val())){
+			alert("사업자등록번호를 입력하여 주십시요.");
+			$("#businessNumber1").focus();
+			return false;
+		}
+		
+		if(!$.isNumeric($("#businessNumber1").val())){
+			alert("사업자등록번호를 숫자로 입력하여 주십시요.");
+			$("#businessNumber1").focus();
+			return false;
+		}
+		
+		if($("#businessNumber1").val().length < 3 || $("#businessNumber1").val().length > 3 ){
+			alert("사업자등록번호 자리수가 맞지 않습니다.");
+			$("#businessNumber1").focus();
+			return false;
+		}
+		
+		if(isEmpty($("#businessNumber2").val())){
+			alert("사업자등록번호를 입력하여 주십시요.");
+			$("#businessNumber2").focus();
+			return false;
+		}
+		
+		if(!$.isNumeric($("#businessNumber2").val())){
+			alert("사업자등록번호를 숫자로 입력하여 주십시요.");
+			$("#businessNumber2").focus();
+			return false;
+		}
+		
+		if($("#businessNumber2").val().length < 2 || $("#businessNumber2").val().length > 2 ){
+			alert("사업자등록번호 자리수가 맞지 않습니다.");
+			$("#businessNumber2").focus();
+			return false;
+		}
+		
+		if(isEmpty($("#businessNumber3").val())){
+			alert("사업자등록번호를 입력하여 주십시요.");
+			$("#businessNumber3").focus();
+			return false;
+		}
+		
+		if(!$.isNumeric($("#businessNumber3").val())){
+			alert("사업자등록번호를 숫자로 입력하여 주십시요.");
+			$("#businessNumber3").focus();
+			return false;
+		}
+		
+		if($("#businessNumber3").val().length < 5 || $("#businessNumber3").val().length > 5 ){
+			alert("사업자등록번호 자리수가 맞지 않습니다.");
+			$("#businessNumber3").focus();
+			return false;
+		}
+		
+		var businessNumber = $("#businessNumber1").val() + $("#businessNumber2").val() + $("#businessNumber3").val();
+		var orgDesc = "조회하신 사업자번호는 유치기관으로 등록되어 있습니다.";
+		
+		var kahf = "<img src='/korp/mk/img/custom/kahf.png' style='width: 30px;height: 30px;margin-right: 5px;'>";
+		
+	 	$.ajax({
+	         url : "/korp/searchAgency.do",
+	         type: "get",
+	         data : {"businessNumber" : businessNumber},
+	         success : function(data)
+	         {
+	        	 $(".search-result").show();
+	        	 
+	             if(data.org == null){
+	            	 $(".search-result .result_txt.st2").hide();
+	            	 $(".search-result .table-p.table-col").hide();            	            	 	            	 	            	 		            	 
+	            
+	            	 
+	            	 $(".search-result .result_txt.st1").show();
+	             }else{
+	            	 $(".search-result .result_txt.st1").hide();
+	            	 
+	            	 //$("#agencyCorporateName").text(data.org.status +"_"+ data.org.korName);
+	            	 if(data.org.status == 8){
+	            		 document.getElementById('agencyCorporateName').innerHTML = kahf + data.org.korName;
+	            	 }else{
+	            		 $("#agencyCorporateName").text(data.org.korName);
+	            	 }
+	            	 
+	            	 if(data.org.type == 'ORG'){
+	            		 $("#agencyType").text("유치기관");	 
+	            	 }else if(data.org.type == 'COM'){
+	            		 $("#agencyType").text("유치사업자");
+	            	 }
+	            	 
+	            	 $("#agencyBusinessNumber").text($("#businessNumber1").val() + "-" + $("#businessNumber2").val() + "-" + $("#businessNumber3").val());
+	            	 $("#agencyAddress").text(data.org.address1 + " " + data.org.address2);
+	            	 
+	            	 if(data.org.withdrawStatus == '0'){
+	            		 orgDesc = "조회하신 사업자번호는<br/>유치기관으로 등록되어 있습니다.";
+	            	 }else if(data.org.withdrawStatus == '1' || data.org.withdrawStatus == '2')	{
+	            		 orgDesc = "조회하신 사업자번호는<br/>외국인환자유치사업 폐업 기관입니다.";
+	            	 }else if(data.org.withdrawStatus == '3') {
+	            		 orgDesc = "조회하신 사업자번호는<br/>외국인환자유치사업 휴업 기관입니다.";
+	            	 }
+	            	 $("#orgDesc").html(orgDesc);
+	            	 
+	            	 $(".search-result .result_txt.st2").show();
+	            	 $(".search-result .table-p.table-col").show();
+	             }
+	         },
+	         error:function(request,status,error){
+	 			alert("오류가 발생했습니다.");
+	 		 }
+	     });
+	}
+	
+	function fnClose(){
+		//$("html").toggleClass('is-agency-search');
+		
+		$("#businessNumber1").val('');
+		$("#businessNumber2").val(''); 
+		$("#businessNumber3").val('');
+		$(".search-result").hide();
+	}
+</script>
+
+</div>
+
+<div id="agencyState" class="modal">
+	
+
+
+
+
+
+
+
+
+
+<div class="modal-container">
+	<div class="table">
+		<div class="cell">
+			
+			<div class="modal-holder">
+
+				<div class="modal-head st2">
+					<h2>유치기관 현황조회</h2>
+				</div>
+
+
+				<div class="body st3">
+				<p class="mb20 txt-ce" style="font-size: 16px; color: #666;">기관명을 입력 하세요. 공란으로 조회 시 전체 유치기관현황이 조회 됩니다.</p>
+				
+				<div class="inp-box" style="justify-content: center;">
+						<input type="text" id="state_korName">
+						<div class="btn-wrap">
+							<button type="button" data-mk-onclick="2c00547e5c95-0" class="btn_s">조회</button>
+							<button type="button" data-mk-onclick="2c00547e5c95-1" class="btn_s">검색옵션</button>
+						</div>
+					</div>
+									
+<!-- 					<div class="p_form st3 clearfix"> -->
+<!-- 						<input type="text" id="state_korName" placeholder="기관명을 입력 하세요. 공란으로 조회 시 전체 유치기관현황이 조회 됩니다." style="width:880px; margin-right: 20px;">							 -->
+<!-- 						<div class="pop_btn_wrap"> -->
+<!-- 							<a href="javascript:void(0);" onclick="javascript:fnAgencyState();return false;" class="btn_s">조회</a> -->
+<!-- 							<a href="javascript:void(0);" onclick="javascript:fnShowOption();return false;" class="btn_s">검색옵션</a> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+															
+					<div class="search-form mt20" style="display:none">
+											
+						<div class="search_box">
+							
+							<table class="table-p st3 table-col">
+								<colgroup>
+									<col style="width: auto;">
+                                    <col style="width: 150px;">
+                                    <col style="width: auto;">
+                                    <col style="width: auto;">
+                                    <col style="width: auto;">
+                                    <col style="width: *;">
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>유치기관 구분</th>
+										<td class="">
+											<ul class="checklist-st1">
+												<li><label for="chk_1_a"><input type="radio"
+														name="state_type" id="chk_1_a" value="0" checked>
+														<span>전체</span>
+												</label></li>
+												<li><label for="chk_1_b">
+												<input type="radio" name="state_type" id="chk_1_b" value="ORG">
+												<span>의료기관</span>
+											</label></li>
+												<li><label for="chk_1_c">
+												<input type="radio" name="state_type" id="chk_1_c" value="COM">
+												<span>유치사업자</span>
+											</label></li>
+											</ul>
+										</td>
+										
+										<th rowspan="3">지역</th>
+										<td rowspan="3" class="st_chk">
+											<ul class="checklist-st1">
+												<li><label for="chk_2_0"> <input type="radio"
+														name="state_sido" id="chk_2_0" value="0" checked>
+														<span>전체</span>
+												</label></li>
+												<li></li>
+											
+												<li><label for="chk_2_9"> <input
+														type="radio" name="state_sido" id="chk_2_9"
+														value="9"> <span>강원</span>
+												</label></li>
+											
+												<li><label for="chk_2_8"> <input
+														type="radio" name="state_sido" id="chk_2_8"
+														value="8"> <span>경기</span>
+												</label></li>
+											
+												<li><label for="chk_2_15"> <input
+														type="radio" name="state_sido" id="chk_2_15"
+														value="15"> <span>경남</span>
+												</label></li>
+											
+												<li><label for="chk_2_14"> <input
+														type="radio" name="state_sido" id="chk_2_14"
+														value="14"> <span>경북</span>
+												</label></li>
+											
+												<li><label for="chk_2_5"> <input
+														type="radio" name="state_sido" id="chk_2_5"
+														value="5"> <span>광주</span>
+												</label></li>
+											
+												<li><label for="chk_2_3"> <input
+														type="radio" name="state_sido" id="chk_2_3"
+														value="3"> <span>대구</span>
+												</label></li>
+											
+												<li><label for="chk_2_6"> <input
+														type="radio" name="state_sido" id="chk_2_6"
+														value="6"> <span>대전</span>
+												</label></li>
+											
+												<li><label for="chk_2_2"> <input
+														type="radio" name="state_sido" id="chk_2_2"
+														value="2"> <span>부산</span>
+												</label></li>
+											
+												<li><label for="chk_2_1"> <input
+														type="radio" name="state_sido" id="chk_2_1"
+														value="1"> <span>서울</span>
+												</label></li>
+											
+												<li><label for="chk_2_17"> <input
+														type="radio" name="state_sido" id="chk_2_17"
+														value="17"> <span>세종</span>
+												</label></li>
+											
+												<li><label for="chk_2_7"> <input
+														type="radio" name="state_sido" id="chk_2_7"
+														value="7"> <span>울산</span>
+												</label></li>
+											
+												<li><label for="chk_2_4"> <input
+														type="radio" name="state_sido" id="chk_2_4"
+														value="4"> <span>인천</span>
+												</label></li>
+											
+												<li><label for="chk_2_13"> <input
+														type="radio" name="state_sido" id="chk_2_13"
+														value="13"> <span>전남</span>
+												</label></li>
+											
+												<li><label for="chk_2_12"> <input
+														type="radio" name="state_sido" id="chk_2_12"
+														value="12"> <span>전북</span>
+												</label></li>
+											
+												<li><label for="chk_2_16"> <input
+														type="radio" name="state_sido" id="chk_2_16"
+														value="16"> <span>제주</span>
+												</label></li>
+											
+												<li><label for="chk_2_11"> <input
+														type="radio" name="state_sido" id="chk_2_11"
+														value="11"> <span>충남</span>
+												</label></li>
+											
+												<li><label for="chk_2_10"> <input
+														type="radio" name="state_sido" id="chk_2_10"
+														value="10"> <span>충북</span>
+												</label></li>
+												
+											</ul>															
+										</td>
+											<!-- 주석처리 2025/10/31 kjs -->
+<!-- 										<th rowspan="3">유치대상국가</th> -->
+<!-- 										<td rowspan="3" class="st_chk"> -->
+<!-- 										<ul class="checklist-st1"> -->
+<!-- 												<li><label for="chk_3_a"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_a" value="0" checked> -->
+<!-- 														<span>전체</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_b"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_b" value="미국"> <span>미국(영어권국가)</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_c"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_c" value="일본"> <span>일본</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_d"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_d" value="중국"> <span>중국</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_f"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_f" value="중동"> <span>중동</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_e"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_e" value="러시아"><span>러시아(CIS 연합)</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_g"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_g" value="몽골"><span>몽골</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_h"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_h" value="베트남"><span>베트남</span> -->
+<!-- 												</label></li> -->
+<!-- 												<li><label for="chk_3_i"> <input type="radio" -->
+<!-- 														name="state_target" id="chk_3_i" value="기타"><span>기타</span> -->
+<!-- 												</label></li> -->
+<!-- 											</ul> -->
+<!-- 										</td> -->
+									</tr>
+									
+									<tr>
+										<th>유치기관 상태</th>
+										<td class="">
+											<ul class="checklist-st1">
+												<!-- 전체 / 폐업 주석처리 2025/10/31 kjs -->
+<!-- 												<li><label for="chk_4_a"> <input type="radio" -->
+<!-- 														name="state_withdrawStatus" id="chk_4_a" value="-1" -->
+<!-- 														checked> <span>전체</span> -->
+<!-- 												</label></li> -->
+												<li>
+													<label for="chk_4_b"> <input type="radio"
+														name="state_withdrawStatus" id="chk_4_b" value="0" checked>
+														<span>유지</span>
+													</label>
+												</li>
+<!-- 												<li> -->
+<!-- 													<label for="chk_4_c"> <input type="radio" -->
+<!-- 														name="state_withdrawStatus" id="chk_4_c" value="1"> -->
+<!-- 														<span>폐업</span> -->
+<!-- 													</label> -->
+<!-- 												</li> -->
+											</ul>
+										</td>
+									</tr>
+									
+									<tr>
+										<th>기관 등록번호</th>
+										<td class="st2">
+											<input type="text" id="state_registerNumber" class="text" placeholder="기관 등록 번호를 입력하세요." />
+											<span>※ 마지막 4자리를 입력 하세요.</span>
+										</td>
+									</tr>
+											
+								</tbody>
+							</table>
+						</div>
+					
+							
+						<!--
+						<div class="select-wrap">
+							<div class="grid">
+								<div class="col col-1-12" style="width:15%;">
+									<div class="module">
+					                    <select class="select full" id="state_type" style="padding-left: 2px;">
+					                        <option value="0">유치기관구분</option>
+					                        <option value="ORG">의료기관</option>
+					                        <option value="COM">유치사업자</option>
+					                    </select>
+									</div>
+								</div>
+								<div class="col col-2-12" style="width:15%;">
+									<div class="module">
+					                    <select class="select full" id="state_withdrawStatus" style="padding-left: 2px;">
+					                        <option value="-1">유치기관상태</option>
+					                        <option value="0">유지</option>
+					                        <option value="1">폐업</option>
+					                    </select>
+									</div>
+								</div>
+								<div class="col col-3-12" style="width:15%;">
+									<div class="module">
+					                    <select class="select full" id="state_sido">
+					                        <option value="0">지역</option>
+					                        
+					                        	<option value="9">강원</option>
+									        
+					                        	<option value="8">경기</option>
+									        
+					                        	<option value="15">경남</option>
+									        
+					                        	<option value="14">경북</option>
+									        
+					                        	<option value="5">광주</option>
+									        
+					                        	<option value="3">대구</option>
+									        
+					                        	<option value="6">대전</option>
+									        
+					                        	<option value="2">부산</option>
+									        
+					                        	<option value="1">서울</option>
+									        
+					                        	<option value="17">세종</option>
+									        
+					                        	<option value="7">울산</option>
+									        
+					                        	<option value="4">인천</option>
+									        
+					                        	<option value="13">전남</option>
+									        
+					                        	<option value="12">전북</option>
+									        
+					                        	<option value="16">제주</option>
+									        
+					                        	<option value="11">충남</option>
+									        
+					                        	<option value="10">충북</option>
+									        
+					                    </select>
+									</div>
+								</div>
+								<div class="col col-4-12" style="width:15%;">
+									<div class="module">
+					                    <select class="select full" id="state_target" style="padding-left: 2px;">
+					                        <option value="0">유치대상국가</option>
+				                        	<option value="미국">미국(영어권국가)</option>
+											<option value="일본">일본</option>
+											<option value="중국">중국</option>
+											<option value="러시아">러시아(CIS 연합)</option>
+											<option value="중동">중동</option>
+											<option value="몽골">몽골</option>
+											<option value="베트남">베트남</option>
+											<option value="기타">기타</option>
+					                    </select>
+									</div>
+								</div>
+								<div class="col col-5-12" style="width:20%;">
+									<div class="module">
+					                    <input type="text" id="state_korName" class="text" style="width: 200px;" placeholder="기관명" />
+									</div>
+								</div>
+								<div class="col col-6-12" style="width:20%;">
+									<div class="module">
+										<input type="text" id="state_registerNumber" class="text" style="width: 200px;" placeholder="등록번호 뒤 4자리" />
+									</div>
+								</div>
+							</div>
+						</div>
+						-->
+											
+						
+						<!-- <a href="javascript:void(0);" onclick="javascript:fnAgencyState();return false;" class="button"><span>조회</span></a>
+						<a href="javascript:void(0);" onclick="javascript:fnExcelDownload();return false;" id="btnAgencyStateExcelDownload" class="button danger" style="display:none"><span>엑셀저장</span></a> -->
+					</div>
+									
+					
+					<div id="agencyStateData"></div>
+										
+				</div>
+
+
+				<a href="#" data-mk-onclick="2c00547e5c95-2" class="js-modal-close"><i class="icon"><em>유지등록기관 조회 닫기</em></i></a>
+				
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-runtime.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-events.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/commonUtil.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" type="text/javascript">
+	
+	
+	function fnShowOption()
+	{
+		$(".search-form").show();
+	}
+	
+
+	
+	function fnAgencyState()
+	{
+		if( $("#state_type").val() == 0 && $("#state_withdrawStatus").val() == 0 && $("#state_sido").val() == 0 && $("#state_target").val() == 0 && isEmpty($("#state_korName").val()) && isEmpty( $("#state_registerNumber").val() )){
+			alert("검색조건을 선택하여 주십시오.");
+			return false;	
+		}
+		
+		var dataList = { };
+		
+		
+		if($('input:radio[name=state_type]:checked').val() != 0) {
+			dataList["type"] = $('input:radio[name=state_type]:checked').val();
+		}
+			
+		
+		if($('input:radio[name=state_withdrawStatus]:checked').val() != -1) {
+			dataList["withdrawStatus"] = $('input:radio[name=state_withdrawStatus]:checked').val();
+		}
+					
+		
+		if($('input:radio[name=state_sido]:checked').val() != 0) {
+			dataList["sido"] = $('input:radio[name=state_sido]:checked').val();
+		}
+		
+		
+		if($('input:radio[name=state_target]:checked').val() != 0) {
+			dataList["targetNation"] = $('input:radio[name=state_target]:checked').val();
+		}	
+
+		
+		
+		
+		if( !isEmpty($("#state_korName").val()))
+		{
+			dataList["korName"] = $("#state_korName").val();
+		}
+		
+		if( !isEmpty($("#state_registerNumber").val() ) )
+		{
+			if($("#state_registerNumber").val().length > 4 || $("#state_registerNumber").val().length < 4 ){
+				alert("등록번호를 4자리로 입력하여 주십시오.");
+				return false;
+			}
+						
+			dataList["registerNumber"] = $("#state_registerNumber").val();
+		}
+		
+		$.ajax({
+            url : "/korp/agencyStateList.do",
+            type : "POST",
+            dataType: "html",
+            data : dataList,
+            success : function(data){
+            	
+            	//alert(data);
+            	$("#agencyStateData *").remove();
+            	$("#agencyStateData").append(data);
+                
+            }, error:function(request,status,error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        });
+	}
+	
+	
+	
+	function fnAgencyStateClose()
+	{
+		$("html").removeClass('is-agency-state');
+		$("#agencyStateData *").remove();
+		$("#type").val("0");
+		$("#withdrawStatus").val("-1");
+		$("#sido").val("0"); 
+		$("#target").val("0");
+		$("#korName").val("");
+		$("#btnAgencyStateExcelDownload").hide();
+	}
+	
+		
+	function fnAgencyExcelDownload(){
+		
+		var $form = $('<form></form>');
+		$form.attr('action', '/korp/agencyStateExcel.do');
+		$form.attr('method', 'post');
+		$form.appendTo('body');
+		
+		if($("#state_type").val() != 0 ){
+			$form.append('<input type="hidden" name="type" value="'+ $("#search_type").val() +'">');
+		}
+		
+		if($("#state_withdrawStatus").val() != -1 ){
+			$form.append('<input type="hidden" name="withdrawStatus" value="'+ $("#search_withdrawStatus").val() +'">');
+		}
+		
+		if( $("#state_sido").val() != 0){   
+			$form.append('<input type="hidden" name="sido" value="'+ $("#search_sido").val() +'">');
+		}
+		
+		if( $("#state_target").val() != 0 ){
+			$form.append('<input type="hidden" name="targetNation" value="'+ $("#search_target").val() +'">');
+		}
+		
+		if( !isEmpty($("#state_korName").val()))
+		{
+			$form.append('<input type="hidden" name="korName" value="'+ $("#search_korName").val() +'">');
+		}
+		
+		if( !isEmpty($("#state_registerNumber").val()))
+		{
+			$form.append('<input type="hidden" name="registerNumber" value="'+ $("#search_registerNumber").val() +'">');
+		}
+		
+		
+		$form.submit();
+	}
+</script>
+
+</div>
+
+<div id="certState" class="modal">
+	
+
+
+
+
+
+
+
+
+
+<div class="modal-container">
+	<div class="table">
+		<div class="cell">
+
+			<div class="modal-holder">
+
+				<div class="modal-head st2">
+					<h2>평가인증기관 현황조회</h2>
+				</div>
+
+
+				<div class="body st3">
+
+					<!-- 					<div class="p_form st3 clearfix"> -->
+					<!-- 						<input type="text" id="cert_state_korName" placeholder="기관명을 입력 하세요. 공란으로 조회 시 전체 평가인증기관현황이 조회 됩니다.">							 -->
+					<!-- 						<div class="pop_btn_wrap"> -->
+					<!-- 							<a href="javascript:void(0);" onclick="javascript:fnCertState();return false;" class="btn_s">조회</a> -->
+					<!-- 							<a href="javascript:void(0);" onclick="javascript:fnShowCertOption();return false;" class="btn_s">검색옵션</a> -->
+					<!-- 						</div> -->
+					<!-- 					</div> -->
+
+					<p class="mb20 txt-ce" style="font-size: 16px; color: #666;">기관명을
+						입력 하세요. 공란으로 조회 시 전체 평가인증기관현황이 조회 됩니다.</p>
+					<div class="inp-box" style="justify-content: center;">
+						<input type="text" id="cert_state_korName">
+						<div class="btn-wrap">
+							<button type="button" data-mk-onclick="bbdb4ce4cb89-0">조회</button>
+							<button type="button" data-mk-onclick="bbdb4ce4cb89-1">검색옵션</button>
+						</div>
+					</div>
+
+					<div class="search-form mt20" style="display: none">
+
+						<div class="search_box">
+							<table class="table-p st3 table-col ">
+								<colgroup>
+									<col style="width: auto;">
+									<col style="width: 150px;">
+									<col style="width: auto;">
+									<col style="width: auto;">
+									<col style="width: auto;">
+									<col style="width: auto;">
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>유치기관 상태</th>
+										<td class="st_chk">
+											<ul class="checklist-st1">
+												<li><label for="chk_csws_1"><input type="radio"
+														name="cert_state_withdrawStatus" id="chk_csws_1"
+														value="-1" checked> <span>전체</span> </label></li>
+												<li><label for="chk_csws_2"><input type="radio"
+														name="cert_state_withdrawStatus" id="chk_csws_2" value="0">
+														<span>유지</span> </label></li>
+												<li><label for="chk_csws_3"><input type="radio"
+														name="cert_state_withdrawStatus" id="chk_csws_3" value="1">
+														<span>폐업</span> </label></li>
+											</ul>
+										</td>
+										<th rowspan="3">지역</th>
+										<td rowspan="3" class="st_chk">
+											<ul class="checklist-st1">
+												<li><label for="chk_css_0"> <input type="radio"
+														name="cert_state_sido" id="chk_css_0" value="0" checked>
+														<span>전체</span>
+												</label></li>
+												
+													<li><label for="chk_css_9"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_9" value="9"> <span>강원</span>
+													</label></li>
+												
+													<li><label for="chk_css_8"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_8" value="8"> <span>경기</span>
+													</label></li>
+												
+													<li><label for="chk_css_15"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_15" value="15"> <span>경남</span>
+													</label></li>
+												
+													<li><label for="chk_css_14"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_14" value="14"> <span>경북</span>
+													</label></li>
+												
+													<li><label for="chk_css_5"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_5" value="5"> <span>광주</span>
+													</label></li>
+												
+													<li><label for="chk_css_3"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_3" value="3"> <span>대구</span>
+													</label></li>
+												
+													<li><label for="chk_css_6"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_6" value="6"> <span>대전</span>
+													</label></li>
+												
+													<li><label for="chk_css_2"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_2" value="2"> <span>부산</span>
+													</label></li>
+												
+													<li><label for="chk_css_1"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_1" value="1"> <span>서울</span>
+													</label></li>
+												
+													<li><label for="chk_css_17"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_17" value="17"> <span>세종</span>
+													</label></li>
+												
+													<li><label for="chk_css_7"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_7" value="7"> <span>울산</span>
+													</label></li>
+												
+													<li><label for="chk_css_4"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_4" value="4"> <span>인천</span>
+													</label></li>
+												
+													<li><label for="chk_css_13"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_13" value="13"> <span>전남</span>
+													</label></li>
+												
+													<li><label for="chk_css_12"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_12" value="12"> <span>전북</span>
+													</label></li>
+												
+													<li><label for="chk_css_16"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_16" value="16"> <span>제주</span>
+													</label></li>
+												
+													<li><label for="chk_css_11"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_11" value="11"> <span>충남</span>
+													</label></li>
+												
+													<li><label for="chk_css_10"> <input
+															type="radio" name="cert_state_sido"
+															id="chk_css_10" value="10"> <span>충북</span>
+													</label></li>
+												
+											</ul>
+										</td>
+										<th rowspan="3">유치대상국가</th>
+										<td rowspan="3" class="st_chk">
+											<ul class="checklist-st1">
+												<li><label for="chk_cst_a"> <input type="radio"
+														name="cert_state_target" id="chk_cst_a" value="0" checked>
+														<span>전체</span>
+												</label></li>
+												<li><label for="chk_cst_b"> <input type="radio"
+														name="cert_state_target" id="chk_cst_b" value="미국">
+														<span>미국(영어권국가)</span>
+												</label></li>
+												<li><label for="chk_cst_c"> <input type="radio"
+														name="cert_state_target" id="chk_cst_c" value="일본">
+														<span>일본</span>
+												</label></li>
+												<li><label for="chk_cst_d"> <input type="radio"
+														name="cert_state_target" id="chk_cst_d" value="중국">
+														<span>중국</span>
+												</label></li>
+												<li><label for="chk_cst_f"> <input type="radio"
+														name="cert_state_target" id="chk_cst_f" value="중동">
+														<span>중동</span>
+												</label></li>
+												<li><label for="chk_cst_e"> <input type="radio"
+														name="cert_state_target" id="chk_cst_e" value="러시아">
+														<span>러시아(CIS 연합)</span>
+												</label></li>
+												<li><label for="chk_cst_g"> <input type="radio"
+														name="cert_state_target" id="chk_cst_g" value="몽골">
+														<span>몽골</span>
+												</label></li>
+												<li><label for="chk_cst_h"> <input type="radio"
+														name="cert_state_target" id="chk_cst_h" value="베트남">
+														<span>베트남</span>
+												</label></li>
+												<li><label for="chk_cst_i"> <input type="radio"
+														name="cert_state_target" id="chk_cst_i" value="기타">
+														<span>기타</span>
+												</label></li>
+											</ul>
+										</td>
+									</tr>
+
+
+
+									<tr>
+										<th>기관 등록번호</th>
+										<td class="st2"><input type="text"
+											id="cert_state_registerNumber" class="text"
+											placeholder="기관 등록 번호를 입력하세요." /> <span>※ 마지막 4자리를 입력
+												하세요.</span></td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+
+					<div id="certStateData"></div>
+
+				</div>
+
+
+				<a href="#" data-mk-onclick="bbdb4ce4cb89-2"
+					class="js-modal-close"><i class="icon"><em>유지등록기관 조회
+							닫기</em></i></a>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-runtime.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-events.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/commonUtil.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" type="text/javascript">
+	function fnShowCertOption() {
+		$(".search-form").show();
+	}
+
+	function fnCertState() {
+		if ($("#cert_state_withdrawStatus").val() == 0
+				&& $("#cert_state_sido").val() == 0
+				&& $("#cert_state_target").val() == 0
+				&& isEmpty($("#cert_state_korName").val())
+				&& isEmpty($("#cert_state_registerNumber").val())) {
+			alert("검색조건을 선택하여 주십시오.");
+			return false;
+		}
+
+		var dataList = {};
+
+		if ($('input:radio[name=cert_state_withdrawStatus]:checked').val() != -1) {
+			dataList["withdrawStatus"] = $(
+					'input:radio[name=cert_state_withdrawStatus]:checked')
+					.val();
+		}
+
+		if ($('input:radio[name=cert_state_sido]:checked').val() != 0) {
+			dataList["sido"] = $('input:radio[name=cert_state_sido]:checked')
+					.val();
+		}
+
+		if ($('input:radio[name=cert_state_target]:checked').val() != 0) {
+			dataList["targetNation"] = $(
+					'input:radio[name=cert_state_target]:checked').val();
+		}
+
+		if (!isEmpty($("#cert_state_korName").val())) {
+			dataList["korName"] = $("#cert_state_korName").val();
+		}
+
+		if (!isEmpty($("#cert_state_registerNumber").val())) {
+			if ($("#cert_state_registerNumber").val().length > 4
+					|| $("#cert_state_registerNumber").val().length < 4) {
+				alert("등록번호를 4자리로 입력하여 주십시오.");
+				return false;
+			}
+
+			dataList["registerNumber"] = $("#cert_state_registerNumber").val();
+		}
+
+		$.ajax({
+			url : "/korp/certStateList.do",
+			type : "POST",
+			dataType : "html",
+			data : dataList,
+			success : function(data) {
+
+				//alert(data);
+				$("#certStateData *").remove();
+				$("#certStateData").append(data);
+
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "message:"
+						+ request.responseText + "\n" + "error:" + error);
+			}
+		});
+	}
+
+	function fnAgencyStateClose() {
+		$("html").removeClass('is-agency-state');
+		$("#agencyStateData *").remove();
+		$("#type").val("0");
+		$("#withdrawStatus").val("-1");
+		$("#sido").val("0");
+		$("#target").val("0");
+		$("#korName").val("");
+		$("#btnAgencyStateExcelDownload").hide();
+	}
+
+	function fnCertExcelDownload() {
+
+		var $form = $('<form></form>');
+		$form.attr('action', '/korp/certStateExcel.do');
+		$form.attr('method', 'post');
+		$form.appendTo('body');
+
+		if ($("#cert_state_withdrawStatus").val() != -1) {
+			$form.append('<input type="hidden" name="withdrawStatus" value="'
+					+ $("#search_withdrawStatus").val() + '">');
+		}
+
+		if ($("#cert_state_sido").val() != 0) {
+			$form.append('<input type="hidden" name="sido" value="'
+					+ $("#search_sido").val() + '">');
+		}
+
+		if ($("#cert_state_target").val() != 0) {
+			$form.append('<input type="hidden" name="targetNation" value="'
+					+ $("#search_target").val() + '">');
+		}
+
+		if (!isEmpty($("#cert_state_korName").val())) {
+			$form.append('<input type="hidden" name="korName" value="'
+					+ $("#search_korName").val() + '">');
+		}
+
+		if (!isEmpty($("#cert_state_registerNumber").val())) {
+			$form.append('<input type="hidden" name="registerNumber" value="'
+					+ $("#search_registerNumber").val() + '">');
+		}
+
+		$form.submit();
+	}
+</script>
+
+</div>
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">
+	$(document).ready(function() {
+		loginTimer();
+	});
+	
+	/* 로그인 타이머 + 연장 2025/02/28 kjs */
+
+	//기본시간
+	var tm = 30;
+	
+	var lgnDt = new Date("").getTime();	//로그인 일시
+	var curDt = new Date().getTime();	//현재 일시
+	var difDt = curDt - lgnDt;
+	var tid;
+	
+	//로그인 타이머
+	function loginTimer() {
+		//설정시간과 로그인 시간 차이
+		var cnt = parseInt(tm*60) - (parseInt(difDt / 1000));
+		tid = setInterval(function(){
+			$("#lgnTm").text(timeFormat(cnt));
+			cnt--;
+			if(cnt < 0) {
+				clearInterval(tid);
+				alert("로그인 시간이 초과되어서 접속이 종료됩니다.");
+				location.href = "/korp/logout.do";
+			}
+		}, 1000)
+	}
+	
+	function timeFormat(cnt){
+		var hour = 0; //시간
+		var min  = 0; //분
+		var sec  = 0; //초
+		if(cnt > 0){
+			min = parseInt(cnt / 60);
+			sec = parseInt(cnt % 60);
+			
+			if(min >= 60){
+				hour = parseInt(min / 60);
+				min =  parseInt(min % 60);
+			}
+		}
+		
+		if(sec < 10) {
+			sec = "0" + sec;
+		}
+		
+		if(min < 10) {
+			min = "0" + min;
+		}
+		
+		return hour + " : " + min + " : " + sec;
+	}
+	
+	//로그인 연장
+	function lgnExpand() {
+		$.ajax({
+			url		: "/korp/lgnExpand.do",
+			type	: "POST",
+			dataType: "json",
+			success : function(result) {
+				difDt = 0;
+				clearInterval(tid);
+				loginTimer();
+			},
+			error	: function(request, s, e) {
+				
+			}
+		});
+	}
+	
+</script>
+
+
+</body>
+
+
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">
+    function moveReport(){
+        
+        
+        location.href="/korp/login.do";
+        
+    }
+
+    $(document).ready(function() {
+        $('.js-region-inquiry').on("click",function(e){
+            e.preventDefault();
+            $('#regionInquiry').addClass('active');
+        });
+        $('.js-modal-close').on("click", function(e) {
+            e.preventDefault();
+            $('#regionInquiry').removeClass('active');
+        })
+    })
+
+
+    function fnShowSearch(){
+        $("#agencySearch").addClass("active");
+    }
+
+    function fnShowState(){
+        $("#agencyState").addClass("active");
+    }
+
+    function fnShowCert(){
+        $("#certState").addClass("active");
+    }
+</script>
+
+
+
+<div id="container"><!-- container -->
+
+    <div id="wrapper"><!-- wrapper -->
+    
+        <div id="innerWrapper" class="sub_con"><!-- innerWrapper -->
+                      
+            <div id="breadcrumb"><!-- breadcrumb -->
+                <div class="inner">
+                    <a href="/korp/main.do"><span>사업소개</span></a>
+                    <a href="#"><span>외국인환자유치 사업소개</span></a>
+                </div>
+            </div><!-- breadcrumb -->
+
+
+            <div id="lnb"><!-- lnb -->
+                <h2 class="sr-only">{{ lnb }}</h2>
+                <div class="module">
+                    <h2 class="subject"><span>사업소개</span></h2>
+                    <ul class="reset">
+                        <li class="in"><a href="#"><span>외국인환자유치 사업소개</span></a></li>
+                        
+                        <li><a href="/korp/intro/registration.do"><span>외국인환자유치 기관 등록제도</span></a></li>
+                        <li><a href="/korp/intro/report.do"><span>외국인환자유치 사업실적 보고</span></a></li>
+                        <li><a href="/korp/intro/evaluation.do"><span>유치의료기관 평가인정제도</span></a></li>
+                        <li><a href="/korp/intro/mainStat.do"><span>외국인환자 유치실적 통계</span></a></li>
+                    </ul>
+                </div>
+            </div><!-- // lnb -->
+            
+                        
+            <div id="content" class="sub_content"><!-- content -->
+
+                <h2 class="sr-only">{{ 본문 영역 }}</h2>
+                <div id="inner"><!-- inner -->
+
+					<div class="section-title">
+						<h3 class="title">외국인환자유치 사업소개</h3>
+					</div>
+
+                    <h4 class="title">외국인환자유치사업이란?</h4>
+                    <div class="frame">
+                        국제적인 경쟁력을 지닌 우리나라 우수한 의료기술로 글로벌 헬스케어 시장을 선도하고, 이를 차세대 국가 발전의 원동력으로 삼기 위해 정부가 선정한 17대 신성장 동력산업의 하나 입니다.<br />
+                        ※ 관련법령 : 의료해외진출 및 외국인환자유치 지원에 관한 법률
+                    </div>
+
+
+                    <h4 class="title">외국인환자 유치 행위란?</h4>
+                    <div class="frame">
+                        “외국인환자 유치”란 외국인환자의 국내 의료기관 이용 증진을 위하여 진료예약·계약체결 및 그 대리, 외국인환자에 대한 진료정보 제공 및 교통 · 숙박 안내 등 진료에 관련된 편의를 제공하는 활동입니다.
+                    </div>
+
+
+                    <h4 class="title">외국인환자 유치 범위</h4>
+                    <div class="frame">
+                        <ul class="reset">
+                            <li>
+                                <p class="reset text-index">
+                                    <span class="mom">①</span> 상담 또는 진료예약을 받거나, 유치사업자나 해외 의료기관 · 에이전시로부터 환자를 소개받아 진료하는 행위
+                                </p>
+                            </li>
+                            <li>
+                                <p class="reset text-index">
+                                    <span class="mom">②</span> 외국어 홈페이지 등을 통해 외국인환자에게 진료정보를 제공하는 행위
+                                </p>
+                            </li>
+                            <p class="reset text-index">
+                                <span class="mom">③</span> 외국인 전담인력 채용, 의료관광비자 발급, 교통 · 숙박 안내 등 외국인 환자를 위한 편의를 제공하는 행위
+                            </p>
+                            <li>
+                        </ul>
+                    </div>
+
+
+                    <h4 class="title">진료예약·계약 체결이란?</h4>
+                    <div class="frame">
+                    	- 전화, 인터넷 등을 통해 외국인환자의 상담 또는 예약을 받는 행위<br>
+                        <span class="indent"></span>※『응급의료에 관한 법률』 제2조 제1호에 따른 응급환자 제외<br>
+                        - 유치사업자, 해외 의료기관 및 에이전시 등에 수수료를 지급하고 환자를 소개 받는 행위<br>
+                    </div>
+                    
+                                                   
+                    <h4 class="title">외국인환자에 대한 진료정보 제공이란?</h4>
+                    <div class="frame">
+                    	- 외국어로 된 홈페이지 · 스마트폰 어플리케이션 개설 및 SNS 운영<br>
+                        <span class="indent"></span>※ 국제통용어인 영어로 단순 정보를 제공하는 홈페이지는 유치행위에 해당하지 않으나, 진료예약 · 상담 및 외국인환자 대상 특화된 정보를 영어로 제공하는 경우는 진료예약·체결에 해당되므로 유치행위임<br>
+
+                        - 외국어로 된 의료광고 행위<br>
+                        <span class="indent"></span>※ 보세판매장 등 면세점, 국제공항, 무역항 등에서만 허용 (외국인환자유치지원법 제 15조 1항)<br>
+
+                        - 외국인환자를 다른 유치 의료기관에 소개 · 알선 해주는 행위<br>
+                        - 컴퓨터, 화상통신, 전화 등을 이용하여 국외에 있는 의료인에게 환자 건강 및 질병 삼당 교육 등 사전 · 사후 서비스 제공 행위<br>                   
+                    </div>
+                    
+                                                         
+                    <h4 class="title">교통 · 숙박 안내 등 진료에 관련된 편의 제공이란?</h4>
+                    <div class="frame">
+                    	외국인환자의 의료기관 이용 촉진을 목적으로 상품 개발 · 판매, 할인쿠폰 발행 · 제공하는 행위<br>외국인 전담 간호사 및 코디네이터, 통역사 등을 고용하여 외국인환자 대상 서비스 제공 행위
+                    </div>
+                    
+                    
+                    <div class="bottom-spacer" aria-hidden="true"></div>
+
+                </div><!-- // inner -->
+
+            </div><!-- // content -->
+
+        </div><!-- // innerWrapper -->
+
+    </div><!-- // wrapper -->
+
+</div>
+
+
+    
+
+
+
+
+<footer id="footer" class="footer">
+	<div class="inner-padding">
+		<div class="top">
+			<div class="flex-wrap">
+				<a href="/korp/main.do" class="f-logo">푸터 로고</a>
+				<div class="add">
+					<p>충청북도 청주시 흥덕구 오송읍 오송생명2로 187 오송보건의료행정타운 한국보건산업진흥원</p>
+				</div>
+			</div>
+			<ul class="f-nav">
+				<li><a href="https://www.khidi.or.kr/board?menuId=MENU00628&siteId=null" class="fc-point" target="_blank">개인정보처리방침</a></li>
+				<li><a href="https://www.khidi.or.kr/board?menuId=MENU00147&siteId=null" target="_blank">찾아오시는 길</a></li>
+			</ul>
+		</div>
+		<div class="bottom">
+			<p class="copyright">Copyright@2024 MEDICALKOREA ALL RIGHTS RESERVED.</p>
+		</div>
+	</div>
+</footer>
+
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-runtime.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/csp-events.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/et/resource/www/js/plugins/swiper-bundle.min.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">
+    $(function () {
+
+    });
+</script>
+    
+<!-- AceCounter Log Gathering Script V.8.0.2019080601 -->
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" language='javascript'>
+	var _AceGID=(function(){var Inf=['gtp2.acecounter.com','8080','AH4A43918078961','AW','0','NaPm,Ncisy','ALL','0']; var _CI=(!_AceGID)?[]:_AceGID.val;var _N=0;var _T=new Image(0,0);if(_CI.join('.').indexOf(Inf[3])<0){ _T.src ="https://"+Inf[0]+'/?cookie'; _CI.push(Inf);  _N=_CI.length; } return {o: _N,val:_CI}; })();
+	var _AceCounter=(function(){var G=_AceGID;var _sc=document.createElement('script');var _sm=document.getElementsByTagName('script')[0];if(G.o!=0){var _A=G.val[G.o-1];var _G=(_A[0]).substr(0,_A[0].indexOf('.'));var _C=(_A[7]!='0')?(_A[2]):_A[3];var _U=(_A[5]).replace(/\,/g,'_');_sc.src='https:'+'//cr.acecounter.com/Web/AceCounter_'+_C+'.js?gc='+_A[2]+'&py='+_A[4]+'&gd='+_G+'&gp='+_A[1]+'&up='+_U+'&rd='+(new Date().getTime());_sm.parentNode.insertBefore(_sc,_sm);return _sc.src;}})();
+</script>
+<!-- AceCounter Log Gathering Script End -->
+
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">
+function fnShow(){
+	$.ajax({
+		type : "get",
+		dataType : "html",
+		url : "/korp/contactList.do",
+		cache:false,
+		success : function(data) {
+			$("#agencyStateData2").empty();
+			$("#agencyStateData2").append(data);
+			$("html").toggleClass('is-region-inquiry');
+		},
+		error:function(request,status,error){
+			alert("오류가 발생했습니다.");
+		}
+	});
+	
+	
+}
+
+</script>
+
+
+
+
+
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/min/plugin.min.js"></script>
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds" src="/korp/mk/js/min/module.min.js"></script>
+
+
+<script nonce="7lxkOt6uE1TbFFVP6IDEh7YSSxZ7TuflCRVCuoSsMds">
+// independent script
+(function($){
+
+})(window.jQuery);
+</script>
+
+</html>

@@ -1,0 +1,1477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+ <head></head>
+ <body>
+  <input type="hidden" id="lsNm" name="lsNm" value="의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙" /> 
+  <input type="hidden" id="lsId" name="lsId" value="012594" /> 
+  <input type="hidden" id="lsiSeq" name="lsiSeq" value="286197" /> 
+  <input type="hidden" id="ancYd" name="ancYd" value="20260515" /> 
+  <input type="hidden" id="efYd" name="efYd" value="20260515" /> 
+  <input type="hidden" id="ancNo" name="ancNo" value="01175" /> 
+  <input type="hidden" id="lsBdyChrCls" name="lsBdyChrCls" value="010202" /> 
+  <input type="hidden" id="lumIsConOrdin" value="" /> 
+  <input type="hidden" id="nwYnValue" value="Y" /> 
+  <input type="hidden" id="hstLnkDpYn" value="0" /> 
+  <style>
+.byl_pop ul li {
+	padding: 7px;
+	margin-left: 10px;
+}
+</style> 
+  <script type="text/javascript">
+$(document).ready(function(){
+	customResizePop(); // 본문 리사이즈
+	initEDotXPress('\uC758\uB8CC \uD574\uC678\uC9C4\uCD9C \uBC0F \uC678\uAD6D\uC778\uD658\uC790 \uC720\uCE58 \uC9C0\uC6D0\uC5D0 \uAD00\uD55C \uBC95\uB960 \uC2DC\uD589\uADDC\uCE59');
+});
+
+function customResizePop() {
+		// 본문 버튼 높이 만큼 제공한다. 13은 패딩값
+		var $contentHeight = $("#center").height() - ($('.body_top_area').height() + 13);
+		var $conTopHeight = $('#conTop').height() + 35;
+
+		var bdyValue = lsVO.bdyUpdValue.updateContentNm || 'lsBdy';
+		
+        //lsInfoP 가 열릴 때 본문은 무조건 조회 하기 때문에 조건문 밖에 위치 하도록 변경.
+		$('#viewwrapCenter').css('overflow-y', 'hidden');
+        $('#bodyContentTOP > #viewwrapCenter').height($contentHeight);
+        $('#conScroll').height($('#viewwrapCenter').height() - $conTopHeight);
+        
+        if (bdyValue == 'lsBdy') {
+			/* 본문에서는 법령명 고정 때문에 hidden 처리*/
+			$('#viewwrapCenter').css('overflow-y', 'hidden');
+			$('#bodyContentTOP > #viewwrapCenter').height($contentHeight);
+			if($('#viewwrapCenter2').height() != null || $('#viewwrapCenter2').height() == 0){
+				$('#bodyContentTOP > #viewwrapCenter2').height($contentHeight);
+				$('#conScroll').height($('#viewwrapCenter2').height() - $conTopHeight);
+				$('#viewwrapCenter2').css('overflow', 'hidden');
+			}
+			$('#bodyContent').css('width', 'inherit');
+		} else if (bdyValue == 'lsPtnThdCmp') {
+			lspttnThdCmpResize();
+		} else if (bdyValue == 'lumThdCmp') {
+			thdCmpNewScPResize();
+		} else if (bdyValue == 'lumThdCmpSc') {
+
+		} else if (bdyValue == 'thdCmpNew') {
+
+		} else if (bdyValue == 'lsOldAndNew') {				
+			// 신구법은 이전 이후 버튼 높이까지 마이너스 한다. 
+			$('#bodySideContent > #oldAndNewDiv').height(($contentHeight + $('#tmpWidth').height()-114));
+		} else if (bdyValue == 'lsRvsDocInfoR') {
+
+			$('#bodySideContent > #viewwrapCenter').height($contentHeight);
+			$('#conScroll').height($('#viewwrapCenter').height() - $conTopHeight);
+			$('#conTop').height($('.cont_top').height());
+			$('#rvsConScroll').height($('#viewwrapCenter').height() - $('#rvsConTop').height());
+			
+		} else {
+			$('#bodySideContent > #viewwrapCenter').height($contentHeight);
+		}
+}
+
+function fileLayer(temp){
+	var tempStr = $("#hwptext"+temp).attr("value");
+	if(tempStr.length > 32){
+ 		$("#hwptext"+temp).css("width", "80%").css("text-overflow", "ellipsis").css("overflow","hidden").css("white-space","nowrap");
+ 		$("#hwpxtext"+temp).css("width", "80%").css("text-overflow", "ellipsis").css("overflow","hidden").css("white-space","nowrap");
+ 		$("#pdftext"+temp).css("width", "80%").css("text-overflow", "ellipsis").css("overflow","hidden").css("white-space","nowrap");
+ 	}
+
+ 	$(".byl_pop").css("display","none");
+
+ 	//레이어높이값
+ 	var height = $("#fileSaveLayer"+temp).height();
+ 	//본문 제일 하단 위치값 
+	var pagePos = document.querySelector('#center');
+	pagePos = pagePos.getBoundingClientRect().bottom;
+	//레이어버튼위치값
+	var layPos =document.querySelector('#imgPos'+temp);
+	layPos = layPos.getBoundingClientRect().bottom;
+	var lay_pop = $('#fileSaveLayer'+temp);
+	var pos = $('#imgPos'+temp).position();
+	
+	if(pagePos > height+layPos){ //레이어가 잘리지 않을 때 
+		lay_pop.css('top', (pos.top)+25 + 'px');
+		lay_pop.css('left', '250px')
+	}else{ //레이어가 잘릴 때
+		lay_pop.css('top', ((pos.top)-height)+ 'px');
+		lay_pop.css('left', (pos.left)+25+'px');
+	}
+	document.getElementById("fileSaveLayer"+temp).style.display="block";
+}
+
+function copyToClipBoard(temp2){
+	var content = document.getElementById('textarea'+temp2);
+	content.select();
+	document.execCommand('copy');
+	alert("주소가 클립보드에 저장되었습니다.");
+	content.setSelectionRange(0,0);
+}
+
+function delLayer(temp){
+	document.getElementById("fileSaveLayer"+temp).style.display="none";
+}
+
+</script> 
+  <div id="contentBody" class="scr_ctrl"> 
+   <div id="sideCenter" class="cont_area"> 
+    <ul class="cont_icon"> 
+     <li><a><img alt="판" src="/LSW/images/button/btn_jostmdico.gif" />판례</a></li> 
+     <li><a><img alt="연" src="/LSW/images/button/btn_year3.gif" />연혁</a></li> 
+     <li><a><img alt="행" src="/LSW/images/button/btn_entrust3_2.gif" />위임행정규칙</a></li> 
+     <li><a><img alt="규" src="/LSW/images/button/btn_entrust4_2.gif" />규제</a></li> 
+     <li><a><img alt="한" src="/LSW/images/button/btn_oneviewIcon.gif" />한눈보기</a></li> 
+    </ul> 
+    <!-- 연혁법령 안내문구 --> 
+    <!-- 법령명 --> 
+    <div id="conTop" class="cont_top"> 
+     <a id="top"></a> 
+     <!-- 국민신문고 연결배너 출력 --> 
+     <h2> 의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙 <span>( 약칭: 의료해외진출법 시행규칙 )</span> </h2> 
+     <div class="ct_sub"> 
+      <span>[시행 2026. 5. 15.] [보건복지부령 제1175호, 2026. 5. 15., 일부개정]</span> 
+     </div> 
+    </div> 
+    <!-- 소관부처 --> 
+    <div id="conScroll" class="scr_area" style="overflow-y: auto;"> 
+     <div class="cont_subtit"> 
+      <p> <a title="팝업으로 이동" onclick="javascript:cptOfiPop('http://www.mohw.go.kr/front_new/index.jsp'); return false;" href="#AJAX" target="_blank"> <span title="http://www.mohw.go.kr/front_new/index.jsp" style="cursor: pointer;">보건복지부</span> (<span title="" style="cursor: pointer;">보건산업해외진출과</span>), 044-202-2983 </a> </p> 
+     </div> 
+     <!-- 조문정보 --> 
+     <a name="J1:0" id="J1:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0001', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000100" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="1:0:000100:98016393" /> <span class="bl"><label for="Y000100"> 제1조(목적) </label> </span> 이 규칙은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190549','ALLJO','');" href="javascript:;">「의료 해외진출 및 외국인환자 유치 지원에 관한 법률」</a> 및 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190547','ALLJO','');" href="javascript:;">같은 법 시행령</a>에서 위임된 사항과 그 시행에 필요한 사항을 규정함을 목적으로 한다. </p> 
+      </div> 
+     </div> 
+     <a name="J2:0" id="J2:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0002', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000200" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="2:0:000200:98016395" /> <span class="bl"><label for="Y000200"> 제2조(외국인환자에서 제외되는 외국인의 범위) </label> </span> <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190551','ALLJO','');" href="javascript:;">「의료 해외진출 및 외국인환자 유치 지원에 관한 법률」</a>(이하 “법”이라 한다) <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190553','JO','');" href="javascript:;">제2조</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190555','JO','');" href="javascript:;">제2호</a>에 따라 외국인환자에서 제외되는 외국인은 다음 각 호와 같다. </p>
+       <p class="pty1_de2_1"> </p> 
+       <p class="pty1_de2h">1. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190561','ALLJO','');" href="javascript:;">「출입국관리법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190569','JO','');" href="javascript:;">제31조</a>에 따라 외국인등록을 한 사람[<a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190565','ALLJO','');" href="javascript:;">「출입국관리법 시행령」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190567','JO','');" href="javascript:;">제12조</a> 및 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190563','BE','');" href="javascript:;">별표 1</a>에 따른 기타(G-1)의 체류자격을 가진 사람은 제외한다] </p> 
+       <p class="pty1_de2h">2. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190557','ALLJO','');" href="javascript:;">「재외동포의 출입국과 법적 지위에 관한 법률」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190559','JO','');" href="javascript:;">제6조</a>에 따라 국내거소신고를 한 외국국적동포 </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J3:0" id="J3:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0003', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016397', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000300" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="3:0:000300:98016397" /> <span class="bl"><label for="Y000300"> 제3조(의료 해외진출의 신고) </label> </span> ① <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190913','ALLJO','');" href="javascript:;">「의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행령」</a>(이하 “영”이라 한다) <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190933','JO','');" href="javascript:;">제3조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190929','JO','');" href="javascript:;">제1항</a> 각 호 외의 부분에 따른 의료 해외진출 신고서(전자문서로 된 신고서를 포함한다)는 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190923','BF','');" href="javascript:;">별지 제1호서식</a>과 같다. </p>
+       <p class="pty1_de2_1">② <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190925','ALLJO','');" href="javascript:;">영</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190919','JO','');" href="javascript:;">제3조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190915','JO','');" href="javascript:;">제1항</a>에 따라 신고를 한 의료기관의 개설자가 <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191105','JO','');" href="javascript:;">같은 조</a> <a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191107','JO','');" href="javascript:;">제5항</a>에 따라 신고내용의 변경을 알리려는 경우에는 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190917','BF','');" href="javascript:;">별지 제1호서식</a>의 의료 해외진출 변경신고서(전자문서로 된 신고서를 포함한다)에 변경 내용을 확인할 수 있는 서류를 첨부하여 보건복지부장관에게 제출해야 한다. <span class="sfon">&lt;신설 2019. 12. 12., 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2_1">③ <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190927','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190921','JO','');" href="javascript:;">제4조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190911','JO','');" href="javascript:;">제5항</a>에 따른 의료 해외진출 신고확인증은 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190931','BF','');" href="javascript:;">별지 제2호서식</a>과 같다. <span class="sfon">&lt;개정 2019. 8. 12., 2019. 12. 12.&gt;</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J4:0" id="J4:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0004', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016399', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:openCtlInfoList('286197', '012594', '0004', '00');return false;" style="text-decoration: none;" title="관련규정 팝업으로 이동"> <img src="images/button/btn_entrust4_2.gif" alt="관련규제버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000400" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="4:0:000400:98016399" /> <span class="bl"><label for="Y000400"> 제4조(외국인환자 유치에 대한 등록요건) </label> </span> ① <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191195','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191151','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191197','JO','');" href="javascript:;">제1항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191153','JO','');" href="javascript:;">제2호</a>에 따라 외국인환자를 유치하려는 의료기관이 가입해야 하는 의료사고배상책임보험 또는 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191193','ALLJO','');" href="javascript:;">「의료사고 피해구제 및 의료분쟁 조정 등에 관한 법률」</a>에 따른 의료배상공제조합(이하 “의료배상공제조합”이라 한다)은 다음 각 호의 기준을 모두 충족해야 한다. <span class="sfon">&lt;개정 2022. 12. 29.&gt;</span> </p>
+       <p class="pty1_de2h">1. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191167','ALLJO','');" href="javascript:;">「의료사고 피해구제 및 의료분쟁 조정 등에 관한 법률」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191213','JO','');" href="javascript:;">제2조</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191215','JO','');" href="javascript:;">제1호</a>에 따른 의료사고로 인한 손해배상을 내용으로 할 것 </p> 
+       <p class="pty1_de2h">2. 연간 배상한도액은 다음 각 목의 구분에 따른 금액 이상일 것 </p> 
+       <p class="pty1_de3">가. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191161','ALLJO','');" href="javascript:;">「의료법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191209','JO','');" href="javascript:;">제3조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191163','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191211','JO','');" href="javascript:;">제1호</a> 또는 <a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191165','JO','');" href="javascript:;">제2호</a>에 따른 의원급 의료기관 또는 조산원: 1억원 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191183','ALLJO','');" href="javascript:;">「의료법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191143','JO','');" href="javascript:;">제3조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191185','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191145','JO','');" href="javascript:;">제3호</a><a title="팝업으로 이동" class="link sfon5" onclick="javascript:fncLsLawPop('1033191187','JO','');" href="javascript:;">가목부터 라목</a>까지에 따른 병원급 의료기관: 1억원 <span class="sfon"></span></p> 
+       <p class="pty1_de3">다. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190807','ALLJO','');" href="javascript:;">「의료법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190809','JO','');" href="javascript:;">제3조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190811','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190813','JO','');" href="javascript:;">제3호</a><a title="팝업으로 이동" class="link sfon5" onclick="javascript:fncLsLawPop('1033190815','JO','');" href="javascript:;">바목</a>에 따른 종합병원: 2억원 <span class="sfon"></span></p> 
+       <p class="pty1_de2h">3. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191205','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191207','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191159','JO','');" href="javascript:;">제6항</a>에 따른 외국인환자 유치에 대한 등록 유효기간 동안 계속 유지할 것 </p> 
+       <p class="pty1_de2_1">② <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191189','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191191','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191147','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191149','JO','');" href="javascript:;">제1호</a>에서 “보건복지부령으로 정하는 보증보험”이란 다음 각 호의 기준을 모두 충족하는 보증보험을 말한다. </p> 
+       <p class="pty1_de2h">1. 외국인환자를 유치하는 과정에서 고의 또는 과실로 외국인환자에게 입힌 손해에 대한 배상책임을 보장하는 보증보험일 것 </p> 
+       <p class="pty1_de2h">2. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191155','ALLJO','');" href="javascript:;">「보험업법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191199','JO','');" href="javascript:;">제4조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191201','JO','');" href="javascript:;">제1항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191203','JO','');" href="javascript:;">제2호</a><a title="팝업으로 이동" class="link sfon5" onclick="javascript:fncLsLawPop('1033191157','JO','');" href="javascript:;">라목</a>에 따라 금융위원회의 허가를 받은 보험회사의 보증보험일 것 </p> 
+       <p class="pty1_de2h">3. 보험금액이 1억원 이상일 것 </p> 
+       <p class="pty1_de2_1">③ <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190817','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190819','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191141','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191181','JO','');" href="javascript:;">제2호</a>에서 “보건복지부령으로 정하는 규모 이상의 자본금”이란 1억원 이상의 자본금(법인의 경우 납입자본금을 말하고, 법인이 아닌 경우 영업용 자산평가액을 말한다)을 말한다. <span class="sfon">&lt;개정 2022. 12. 29., 2024. 12. 31., 2026. 5. 15.&gt;</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J5:0" id="J5:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0005', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016401', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:openCtlInfoList('286197', '012594', '0005', '00');return false;" style="text-decoration: none;" title="관련규정 팝업으로 이동"> <img src="images/button/btn_entrust4_2.gif" alt="관련규제버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000500" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="5:0:000500:98016401" /> <span class="bl"><label for="Y000500"> 제5조(외국인환자 유치에 대한 등록절차) </label> </span> ① <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190999','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190969','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190939','JO','');" href="javascript:;">제1항</a>에 따라 외국인환자 유치의 등록을 하려는 의료기관은 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190967','BF','');" href="javascript:;">별지 제3호서식</a>의 등록신청서(전자문서로 된 등록신청서를 포함한다)에 다음 각 호의 서류(전자문서로 된 서류를 포함한다)를 첨부하여 특별시장ㆍ광역시장ㆍ특별자치시장ㆍ도지사 또는 특별자치도지사(이하 “시ㆍ도지사”라 한다)에게 제출해야 한다. <span class="sfon">&lt;개정 2020. 10. 8., 2022. 12. 29.&gt;</span> </p>
+       <p class="pty1_de2h">1. 삭제 <span class="sfon">&lt;2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2h">2. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190961','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190955','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190993','JO','');" href="javascript:;">제1항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190963','JO','');" href="javascript:;">제1호</a> 및 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190989','ALLJO','');" href="javascript:;">영</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190981','JO','');" href="javascript:;">제4조</a>에 따른 진료과목별 전문의 명단 </p> 
+       <p class="pty1_de2h">3. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190987','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190979','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191003','JO','');" href="javascript:;">제1항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190941','JO','');" href="javascript:;">제2호</a> 및 이 규칙 제4조제1항에 따른 의료사고배상책임보험 또는 의료배상공제조합에 가입하였음을 증명하는 서류 </p> 
+       <p class="pty1_de2h">4. <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link_not" onclick="javascript:joDelegatePop('286197','0005','00','010102','NOT','보건복지부장관이 정하는','50481');">보건복지부장관이 정하는</a> 사업운영계획서 </p> 
+       <p class="pty1_de2_1">② 제1항에 따라 신청서를 제출받은 담당 공무원은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190971','ALLJO','');" href="javascript:;">「전자정부법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190949','JO','');" href="javascript:;">제36조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191001','JO','');" href="javascript:;">제1항</a>에 따른 행정정보의 공동이용을 통하여 다음 각 호의 서류를 확인해야 한다. 다만, 신청인이 확인에 동의하지 않는 경우에는 그 서류를 첨부하도록 해야 한다. <span class="sfon">&lt;신설 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2h">1. 의료기관 개설신고증명서 또는 의료기관 개설허가증 </p> 
+       <p class="pty1_de2h">2. 전문의 자격증 </p> 
+       <p class="pty1_de2_1">③ <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190957','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190997','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190985','JO','');" href="javascript:;">제2항</a>에 따라 외국인환자 유치의 등록을 하려는 자는 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190945','BF','');" href="javascript:;">별지 제4호서식</a>의 등록신청서(전자문서로 된 등록신청서를 포함한다)에 다음 각 호의 서류(전자문서로 된 서류를 포함한다)를 첨부하여 시ㆍ도지사에게 제출해야 한다. <span class="sfon">&lt;개정 2020. 10. 8., 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2h">1. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190965','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190995','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190937','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190977','JO','');" href="javascript:;">제1호</a> 및 이 규칙 제4조제2항에 따른 보증보험에 가입하였음을 증명하는 서류 </p> 
+       <p class="pty1_de2h">2. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190975','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190935','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190947','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190983','JO','');" href="javascript:;">제2호</a> 및 이 규칙 제4조제3항에 따른 자본금을 보유하였음을 증명하는 서류 </p> 
+       <p class="pty1_de2h">3. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190953','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190943','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190991','JO','');" href="javascript:;">제2항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190973','JO','');" href="javascript:;">제3호</a>에 따른 사무실에 대한 소유권이나 사용권이 있음을 증명하는 서류 </p> 
+       <p class="pty1_de2h">4. 정관(법인만 해당한다) </p> 
+       <p class="pty1_de2h">5. <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link_not" onclick="javascript:joDelegatePop('286197','0005','00','010102','NOT','보건복지부장관이 정하는','50483');">보건복지부장관이 정하는</a> 사업운영계획서 </p> 
+       <p class="pty1_de2_1">④ 시ㆍ도지사는 제1항 또는 제3항에 따른 등록 신청에 대하여 등록을 해주는 경우에는 다음 각 호의 구분에 따라 등록증을 발급해야 하고, 특별시ㆍ광역시ㆍ특별자치시ㆍ도 또는 특별자치도(이하 “시ㆍ도”라 한다)의 인터넷 홈페이지에 그 등록내용을 게시해야 한다. <span class="sfon">&lt;개정 2020. 10. 8., 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2h">1. 제1항에 따라 등록한 의료기관(이하 “외국인환자 유치의료기관”이라 한다)의 경우: <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190951','BF','');" href="javascript:;">별지 제5호서식</a>의 외국인환자 유치의료기관 등록증 </p> 
+       <p class="pty1_de2h">2. 제3항에 따라 등록한 자(이하 “외국인환자 유치사업자”라 한다)의 경우: <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190959','BF','');" href="javascript:;">별지 제6호서식</a>의 외국인환자 유치사업자 등록증 </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J6:0" id="J6:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0006', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016403', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:openCtlInfoList('286197', '012594', '0006', '00');return false;" style="text-decoration: none;" title="관련규정 팝업으로 이동"> <img src="images/button/btn_entrust4_2.gif" alt="관련규제버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000600" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="6:0:000600:98016403" /> <span class="bl"><label for="Y000600"> 제6조(외국인환자 유치기관 등록 갱신 절차) </label> </span> ① 외국인환자 유치의료기관 또는 외국인환자 유치사업자(이하 “외국인환자 유치기관”이라 한다)가 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191035','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191009','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191017','JO','');" href="javascript:;">제7항</a>에 따라 등록을 갱신하려는 경우에는 등록의 유효기간이 만료되기 전 2개월 이내에 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191029','BF','');" href="javascript:;">별지 제7호서식</a>의 외국인환자 유치기관 등록 갱신 신청서(전자문서로 된 신청서를 포함한다)에 다음 각 호의 구분에 따른 서류(전자문서로 된 서류를 포함한다)를 첨부하여 시ㆍ도지사에게 제출해야 한다. <span class="sfon">&lt;개정 2019. 8. 12., 2020. 10. 8., 2022. 12. 29.&gt;</span> </p>
+       <p class="pty1_de2h">1. 외국인환자 유치의료기관의 경우: 다음 각 목의 서류 </p> 
+       <p class="pty1_de3">가. <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191019','JO','');" href="javascript:;">제5조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191021','JO','');" href="javascript:;">제1항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191013','JO','');" href="javascript:;">제2호</a> 및 제3호의 서류 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191015','BF','');" href="javascript:;">별지 제5호서식</a>의 외국인환자 유치의료기관 등록증 <span class="sfon"></span></p> 
+       <p class="pty1_de2h">2. 외국인환자 유치사업자의 경우: 다음 각 목의 서류 </p> 
+       <p class="pty1_de3">가. <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191025','JO','');" href="javascript:;">제5조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191031','JO','');" href="javascript:;">제3항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191011','JO','');" href="javascript:;">제1호부터 제3호</a>까지의 서류 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191007','BF','');" href="javascript:;">별지 제6호서식</a>의 외국인환자 유치사업자 등록증 <span class="sfon"></span></p> 
+       <p class="pty1_de2_1">② 제1항제1호에 따라 신청서를 제출받은 담당 공무원은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191023','ALLJO','');" href="javascript:;">「전자정부법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191037','JO','');" href="javascript:;">제36조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191033','JO','');" href="javascript:;">제1항</a>에 따른 행정정보의 공동이용을 통하여 전문의 자격증을 확인해야 한다. 다만, 신청인이 확인에 동의하지 않는 경우에는 그 서류를 첨부하도록 해야 한다. <span class="sfon">&lt;신설 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2_1">③ 제1항에 따른 등록 갱신 신청에 따른 등록증 발급에 관하여는 <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191005','JO','');" href="javascript:;">제5조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191027','JO','');" href="javascript:;">제4항</a>을 준용한다. 이 경우 “등록 신청”은 “등록 갱신 신청”으로 본다. <span class="sfon">&lt;개정 2022. 12. 29.&gt;</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J6:2" id="J6:2"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0006', '02' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016405', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000602" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="6:2:000602:98016405" /> <span class="bl"><label for="Y000602"> 제6조의2(등록사항의 변경 또는 휴업ㆍ폐업의 신고) </label> </span> ① <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191053','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191067','JO','');" href="javascript:;">제6조의2</a>에 따라 외국인환자 유치기관은 다음 각 호의 구분에 따른 사항이 변경된 경우에는 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191047','BF','');" href="javascript:;">별지 제7호의2서식</a>의 외국인환자 유치기관 등록사항 변경 신고서에 외국인환자 유치의료기관 등록증 또는 외국인환자 유치사업자 등록증과 변경된 사항을 증명하는 서류를 첨부하여 변경 사유가 발생한 날부터 1개월 이내에 시ㆍ도지사에게 제출해야 한다. </p>
+       <p class="pty1_de2h">1. 외국인환자 유치의료기관의 경우: 다음 각 목의 사항 </p> 
+       <p class="pty1_de3">가. 의료기관의 명칭 및 주소 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. 의료기관의 대표자 성명 <span class="sfon"></span></p> 
+       <p class="pty1_de3">다. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191049','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191069','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191043','JO','');" href="javascript:;">제1항</a> 각 호의 요건 <span class="sfon"></span></p> 
+       <p class="pty1_de2h">2. 외국인환자 유치사업자의 경우: 다음 각 목의 사항 </p> 
+       <p class="pty1_de3">가. 명칭 및 주소 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. 대표자 성명 <span class="sfon"></span></p> 
+       <p class="pty1_de3">다. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191041','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191057','JO','');" href="javascript:;">제6조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191059','JO','');" href="javascript:;">제2항</a> 각 호의 요건 <span class="sfon"></span></p> 
+       <p class="pty1_de2_1">② 제1항제1호에 따라 신고서를 제출받은 담당 공무원은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191063','ALLJO','');" href="javascript:;">「전자정부법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191065','JO','');" href="javascript:;">제36조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191071','JO','');" href="javascript:;">제1항</a>에 따른 행정정보의 공동이용을 통하여 다음 각 호의 서류를 확인해야 한다. 다만, 신고인이 확인에 동의하지 않는 경우에는 그 서류를 첨부하도록 해야 한다. </p> 
+       <p class="pty1_de2h">1. 의료기관 개설신고증명서 또는 의료기관 개설허가증 </p> 
+       <p class="pty1_de2h">2. 전문의 자격증 </p> 
+       <p class="pty1_de2_1">③ 제1항에 따른 신고를 접수한 시ㆍ도지사는 명칭이나 주소 등 외국인환자 유치기관의 등록증에 기재된 사항이 변경된 경우에는 등록증을 재발급해야 한다. </p> 
+       <p class="pty1_de2_1">④ <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191051','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191045','JO','');" href="javascript:;">제6조의2</a>에 따라 휴업 또는 폐업을 신고하려는 외국인환자 유치기관은 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191039','BF','');" href="javascript:;">별지 제7호의3서식</a>의 외국인환자 유치기관 휴업 또는 폐업 신고서에 다음 각 호의 서류를 첨부하여 휴업 또는 폐업을 한 날부터 1개월 이내에 시ㆍ도지사에게 제출해야 한다. </p> 
+       <p class="pty1_de2h">1. <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191061','BF','');" href="javascript:;">별지 제5호서식</a>의 외국인환자 유치의료기관 등록증 또는 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191055','BF','');" href="javascript:;">별지 제6호서식</a>의 외국인환자 유치사업자 등록증 </p> 
+       <p class="pty1_de2h">2. 외국인환자 유치기관의 휴업 또는 폐업에 대한 이사회 또는 총회 의결서 등 법인 내부 의결기관의 결의서(법인인 경우만 해당한다) </p> 
+       <p class="pty1_de2"> <span class="sfon">[본조신설 2022. 12. 29.]</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J7:0" id="J7:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0007', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000700" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="7:0:000700:98016407" /> <span class="bl"><label for="Y000700"> 제7조(외국인환자의 권익 보호) </label> </span> ① 외국인환자 유치기관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190571','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190573','JO','');" href="javascript:;">제8조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190575','JO','');" href="javascript:;">제1항</a>에 따라 다음 각 호의 사항을 영어로 적은 문서를 의료기관 또는 사업장 내에 게시하여야 한다. </p>
+       <p class="pty1_de2h">1. 제공하는 용역의 내용 및 조건 등에 관한 사항 </p> 
+       <p class="pty1_de2h">2. 분쟁발생 시 분쟁해결절차에 관한 사항 </p> 
+       <p class="pty1_de2h">3. 건강정보 등 개인정보보호에 관한 사항 </p> 
+       <p class="pty1_de2_1">② 외국인환자 유치의료기관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190579','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190821','JO','');" href="javascript:;">제8조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190823','JO','');" href="javascript:;">제2항</a>에 따라 의료기관 내에 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190577','BE','');" href="javascript:;">「의료법 시행규칙」 별표 1</a>에 따른 환자의 권리와 의무를 영어로 적은 문서를 게시하고 출력물로 비치하여야 한다. 이 경우 다른 외국어로 되어 있는 문서를 추가적으로 게시ㆍ비치할 수 있다. </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J7:2" id="J7:2"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0007', '02' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016409', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:joDelegatePop('286197', '0007', '02', '010102');return false; " style="text-decoration: none;" title="위임행정규칙 팝업으로 이동"> <img src="images/button/btn_entrust3_2.gif" alt="위임행정규칙버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000702" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="7:2:000702:98016409" /> <span class="bl"><label for="Y000702"> 제7조의2(수수료 또는 진료비 부과 실태조사) </label> </span> ① 보건복지부장관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191119','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191121','JO','');" href="javascript:;">제9조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191113','JO','');" href="javascript:;">제2항</a>에 따른 수수료ㆍ진료비의 부과 실태조사(이하 이 조에서 “실태조사”라 한다)를 위하여 필요한 경우 전문가 또는 관계 기관ㆍ법인ㆍ단체 등에 자료의 제출 또는 의견의 제시를 요청할 수 있다. </p>
+       <p class="pty1_de2_1">② <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191115','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191111','JO','');" href="javascript:;">제9조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191117','JO','');" href="javascript:;">제2항</a>에 따라 실태조사의 결과를 공개할 때에는 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link_not" onclick="javascript:joDelegatePop('286197','0007','02','010102','NOT','보건복지부장관이 정하여 고시하는','53769');">보건복지부장관이 정하여 고시하는</a> 전산시스템에 게시하는 방법으로 한다. </p> 
+       <p class="pty1_de2_1">③ 제1항 및 제2항에서 규정한 사항 외에 실태조사의 방법ㆍ절차 및 공개 범위 등에 관한 세부 사항은 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link" onclick="javascript:joDelegatePop('286197','0007','02','010102','DEG','보건복지부장관이 정하여 고시한다','53767');">보건복지부장관이 정하여 고시한다</a>. </p> 
+       <p class="pty1_de2"> <span class="sfon">[본조신설 2024. 7. 10.]</span> </p> 
+       <div class="rule_area"> 
+        <div class="btn_rule"> 
+         <a href="javascript:viewDelegatedAdmRul('000702', '286197', '0007', '02', '010102')"><img id="delegatedAdmRul_img_000702" src="images/common/btn_rule_view.gif" title="위임행정규칙" alt="위임행정규칙" /></a> 
+        </div> 
+        <div id="delegated_000702" class="rule_box" style="display: none;"></div> 
+       </div> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J8:0" id="J8:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0008', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:openCtlInfoList('286197', '012594', '0008', '00');return false;" style="text-decoration: none;" title="관련규정 팝업으로 이동"> <img src="images/button/btn_entrust4_2.gif" alt="관련규제버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000800" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="8:0:000800:98016411" /> <span class="bl"><label for="Y000800"> 제8조(종합병원의 외국인환자 유치 제한 병상 수) </label> </span> <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190829','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190831','JO','');" href="javascript:;">제10조</a>에서 “보건복지부령으로 정하는 병상 수”란 다음 각 호의 구분에 따른 병상 수를 말한다. 다만, 환자 1명만을 수용하는 입원실의 병상 수는 제외한다. </p>
+       <p class="pty1_de2_1"> </p> 
+       <p class="pty1_de2h">1. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190833','ALLJO','');" href="javascript:;">「의료법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190835','JO','');" href="javascript:;">제3조의3</a>에 따른 종합병원 중 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190825','ALLJO','');" href="javascript:;">같은 법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190827','JO','');" href="javascript:;">제3조의4</a>에 따라 상급종합병원으로 지정된 종합병원의 경우: 병상 수의 100분의 5 </p> 
+       <p class="pty1_de2h">2. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190837','ALLJO','');" href="javascript:;">「의료법」</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190839','JO','');" href="javascript:;">제3조의3</a>에 따른 종합병원(제1호의 상급종합병원으로 지정된 종합병원은 제외한다)의 경우: 병상 수의 100분의 8 </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J9:0" id="J9:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0009', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016413', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y000900" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="9:0:000900:98016413" /> <span class="bl"><label for="Y000900"> 제9조(사업실적 보고) </label> </span> ① 외국인환자 유치기관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191169','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191171','JO','');" href="javascript:;">제11조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191173','JO','');" href="javascript:;">제1항</a>에 따라 전년도 사업실적을 다음 각 호의 구분에 따라 시ㆍ도지사에게 보고해야 한다. <span class="sfon">&lt;개정 2019. 9. 27., 2020. 10. 8., 2022. 12. 29.&gt;</span> </p>
+       <p class="pty1_de2h">1. 외국인환자 유치의료기관의 경우: 다음 각 목에 관한 사항 </p> 
+       <p class="pty1_de3">가. 외국인환자의 국적, 성별 및 출생연도 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. 외국인환자의 진료과목, 입원기간, 주 질병ㆍ부상명 및 외래 방문일수 <span class="sfon"></span></p> 
+       <p class="pty1_de2h">2. 외국인환자 유치사업자의 경우: 다음 각 목에 관한 사항 </p> 
+       <p class="pty1_de3">가. 외국인환자의 국적, 성별 및 출생연도 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. 외국인환자의 방문 의료기관, 진료과목, 입원기간 및 외래 방문일수 <span class="sfon"></span></p> 
+       <p class="pty1_de3">다. 삭제 <span class="sfon">&lt;2026. 5. 15.&gt;</span></p> 
+       <p class="pty1_de2_1">② 외국인환자 유치기관은 제1항에 따른 사업실적을 보고하는 경우에는 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link_not" onclick="javascript:joDelegatePop('286197','0009','00','010102','NOT','보건복지부장관이 정하는','50485');">보건복지부장관이 정하는</a> 전산시스템을 통하여 보고할 수 있다. </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J10:0" id="J10:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0010', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001000" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="10:0:001000:98016415" /> <span class="bl"><label for="Y001000"> 제10조(의료 해외진출 및 외국인환자 유치 지원 사업) </label> </span> <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190841','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190843','JO','');" href="javascript:;">제12조</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033190845','JO','');" href="javascript:;">제9호</a>에서 “의료 해외진출 및 외국인환자 유치를 지원하기 위하여 보건복지부령으로 정하는 사업”이란 다음 각 호의 사업을 말한다. </p>
+       <p class="pty1_de2_1"> </p> 
+       <p class="pty1_de2h">1. 외국인환자의 편의 제공을 위한 기반시설의 설치ㆍ운영에 관한 사항 </p> 
+       <p class="pty1_de2h">2. 국외 의료기관 및 의료 단체 상호간의 협력ㆍ지원에 관한 사항 </p> 
+       <p class="pty1_de2h">3. 외국인환자 유치를 위한 지방자치단체와의 협력에 관한 사항 </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J11:0" id="J11:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0011', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016417', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:joDelegatePop('286197', '0011', '00', '010102');return false; " style="text-decoration: none;" title="위임행정규칙 팝업으로 이동"> <img src="images/button/btn_entrust3_2.gif" alt="위임행정규칙버튼" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:openCtlInfoList('286197', '012594', '0011', '00');return false;" style="text-decoration: none;" title="관련규정 팝업으로 이동"> <img src="images/button/btn_entrust4_2.gif" alt="관련규제버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001100" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="11:0:001100:98016417" /> <span class="bl"><label for="Y001100"> 제11조(의료 통역능력 검정시험) </label> </span> ① 보건복지부장관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190847','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190849','JO','');" href="javascript:;">제13조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190851','JO','');" href="javascript:;">제2항</a>에 따라 매년 1회 이상 의료 통역능력 검정시험을 실시하여야 한다. </p>
+       <p class="pty1_de2_1">② 보건복지부장관은 제1항에 따른 의료 통역능력 검정시험을 실시할 때에는 시행 일시, 시행 장소 및 시험과목 등 의료 통역능력 검정시험 시행계획을 시험 시행일 60일 전까지 공고하여야 한다. </p> 
+       <p class="pty1_de2_1">③ 의료 통역능력 검정시험은 필기시험과 구술시험으로 구분하여 실시하되, 세부 평가항목은 다음 각 호의 구분에 따른다. </p> 
+       <p class="pty1_de2h">1. 필기시험: 다음 각 목의 사항 </p> 
+       <p class="pty1_de3">가. 국제문화 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. 의료서비스 <span class="sfon"></span></p> 
+       <p class="pty1_de3">다. 병원시스템 <span class="sfon"></span></p> 
+       <p class="pty1_de3">라. 기초의학 <span class="sfon"></span></p> 
+       <p class="pty1_de3">마. 그 밖에 의료 통역능력의 검증을 위하여 보건복지부장관이 특히 필요하다고 인정하여 고시하는 사항 <span class="sfon"></span></p> 
+       <p class="pty1_de2h">2. 구술시험: 다음 각 목의 사항 </p> 
+       <p class="pty1_de3">가. 외국어 의사 표현의 정확성과 논리성 <span class="sfon"></span></p> 
+       <p class="pty1_de3">나. 의료 지식 <span class="sfon"></span></p> 
+       <p class="pty1_de2_1">④ 의료 통역능력 검정시험의 합격 기준은 다음 각 호의 구분에 따른다. 이 경우 구술시험은 필기시험 합격자를 대상으로 실시한다. </p> 
+       <p class="pty1_de2h">1. 필기시험: 각 과목 총점의 40퍼센트 이상, 전 과목 총점의 60퍼센트 이상 득점한 사람 </p> 
+       <p class="pty1_de2h">2. 구술시험: 구술시험 총점의 75퍼센트 이상 득점한 사람 </p> 
+       <p class="pty1_de2_1">⑤ 의료 통역능력 검정시험의 구술시험에 불합격한 사람에 대해서는 그 다음 회의 시험에 한정하여 필기시험을 면제한다. <span class="sfon">&lt;신설 2017. 10. 13.&gt;</span> </p> 
+       <p class="pty1_de2_1">⑥ 의료 통역능력 검정시험에서 부정행위를 한 사람에 대해서는 그 시험을 정지시키거나 합격을 무효로 한다. <span class="sfon">&lt;신설 2017. 10. 13.&gt;</span> </p> 
+       <p class="pty1_de2_1">⑦ 제2항부터 제6항까지에서 규정한 사항 외에 의료 통역능력 검정시험의 실시절차, 실시방법, 시험비용 및 부정행위 등에 필요한 세부사항은 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link" onclick="javascript:joDelegatePop('286197','0011','00','010102','DEG','보건복지부장관이 정하여 고시한다','9529');">보건복지부장관이 정하여 고시한다</a>. <span class="sfon">&lt;개정 2017. 10. 13.&gt;</span> </p> 
+       <div class="rule_area"> 
+        <div class="btn_rule"> 
+         <a href="javascript:viewDelegatedAdmRul('001100', '286197', '0011', '00', '010102')"><img id="delegatedAdmRul_img_001100" src="images/common/btn_rule_view.gif" title="위임행정규칙" alt="위임행정규칙" /></a> 
+        </div> 
+        <div id="delegated_001100" class="rule_box" style="display: none;"></div> 
+       </div> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J12:0" id="J12:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0012', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:joDelegatePop('286197', '0012', '00', '010102');return false; " style="text-decoration: none;" title="위임행정규칙 팝업으로 이동"> <img src="images/button/btn_entrust3_2.gif" alt="위임행정규칙버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001200" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="12:0:001200:98016419" /> <span class="bl"><label for="Y001200"> 제12조(양성기관의 지정) </label> </span> ① 보건복지부장관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190867','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190869','JO','');" href="javascript:;">제13조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190871','JO','');" href="javascript:;">제3항</a>에 따른 양성기관(이하 “양성기관”이라 한다)을 지정하는 경우에는 다음 각 호의 기관으로 구분하여 지정할 수 있다. </p>
+       <p class="pty1_de2h">1. 의료 해외진출 및 외국인환자 유치 지원 전문인력 양성기관 </p> 
+       <p class="pty1_de2h">2. 통역 서비스 제공인력 양성, 보수교육 및 의료 통역능력 검정 지원을 위한 양성기관 </p> 
+       <p class="pty1_de2_1">② 양성기관의 지정기준은 다음 각 호와 같다. </p> 
+       <p class="pty1_de2h">1. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190873','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190875','JO','');" href="javascript:;">제13조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190877','JO','');" href="javascript:;">제1항</a> 또는 <a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190879','JO','');" href="javascript:;">제2항</a>에 따른 업무를 수행하는 데 필요한 전담조직과 인력을 각각 갖출 것 </p> 
+       <p class="pty1_de2h">2. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190889','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190861','JO','');" href="javascript:;">제13조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190863','JO','');" href="javascript:;">제1항</a> 또는 <a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190865','JO','');" href="javascript:;">제2항</a>에 따른 업무를 수행하는 데 필요한 시설ㆍ설비 및 장비를 각각 갖출 것 </p> 
+       <p class="pty1_de2h">3. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190881','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190883','JO','');" href="javascript:;">제13조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190885','JO','');" href="javascript:;">제1항</a> 또는 <a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190887','JO','');" href="javascript:;">제2항</a>에 따른 업무를 수행하는 데 필요한 온라인 업무처리시스템을 각각 갖출 것 </p> 
+       <p class="pty1_de2h">4. <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190853','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190855','JO','');" href="javascript:;">제13조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190857','JO','');" href="javascript:;">제1항</a> 또는 <a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190859','JO','');" href="javascript:;">제2항</a>에 따른 업무를 수행하는 데 필요한 재정적ㆍ행정적 능력이 있을 것 </p> 
+       <p class="pty1_de2_1">③ 보건복지부장관은 양성기관을 지정하는 경우에는 업무수행에 필요한 조건을 붙일 수 있다. </p> 
+       <p class="pty1_de2_1">④ 보건복지부장관은 양성기관을 지정한 경우에는 그 지정내용을 보건복지부 인터넷 홈페이지에 게시하여야 한다. </p> 
+       <p class="pty1_de2_1">⑤ 양성기관은 분기별로 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link" onclick="javascript:joDelegatePop('286197','0012','00','010102','DEG','보건복지부장관이 정하는','50489');">보건복지부장관이 정하는</a> 바에 따라 그 업무수행 현황 등을 보건복지부장관에게 보고하여야 한다. </p> 
+       <p class="pty1_de2_1">⑥ 제3항부터 제5항까지에서 규정한 사항 외에 양성기관의 지정절차, 지정방법 및 업무수행에 필요한 세부사항은 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link" onclick="javascript:joDelegatePop('286197','0012','00','010102','DEG','보건복지부장관이 정하여 고시한다','17');">보건복지부장관이 정하여 고시한다</a>. </p> 
+       <div class="rule_area"> 
+        <div class="btn_rule"> 
+         <a href="javascript:viewDelegatedAdmRul('001200', '286197', '0012', '00', '010102')"><img id="delegatedAdmRul_img_001200" src="images/common/btn_rule_view.gif" title="위임행정규칙" alt="위임행정규칙" /></a> 
+        </div> 
+        <div id="delegated_001200" class="rule_box" style="display: none;"></div> 
+       </div> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J13:0" id="J13:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0013', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016421', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001300" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="13:0:001300:98016421" /> <span class="bl"><label for="Y001300"> 제13조(유치기관 평가 및 인증신청서) </label> </span> <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191073','ALLJO','');" href="javascript:;">영</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191079','JO','');" href="javascript:;">제5조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191081','JO','');" href="javascript:;">제2항</a>에 따른 평가ㆍ인증신청서(전자문서로 된 신청서를 포함한다)는 다음 각 호의 구분에 따른다. <span class="sfon">&lt;개정 2022. 12. 29.&gt;</span> </p>
+       <p class="pty1_de2_1"> </p> 
+       <p class="pty1_de2h">1. 외국인환자 유치의료기관: <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191075','BF','');" href="javascript:;">별지 제8호서식</a> </p> 
+       <p class="pty1_de2h">2. 외국인환자 유치사업자: <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033191077','BF','');" href="javascript:;">별지 제9호서식</a> </p> 
+       <p class="pty1_de2"> <span class="sfon">[제목개정 2022. 12. 29.]</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J14:0" id="J14:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0014', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016423', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:openCtlInfoList('286197', '012594', '0014', '00');return false;" style="text-decoration: none;" title="관련규정 팝업으로 이동"> <img src="images/button/btn_entrust4_2.gif" alt="관련규제버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001400" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="14:0:001400:98016423" /> <span class="bl"><label for="Y001400"> 제14조(외국인 의료광고 허용 지역의 기준 등) </label> </span> ① <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191083','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191089','JO','');" href="javascript:;">제15조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191091','JO','');" href="javascript:;">제1항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191085','JO','');" href="javascript:;">제6호</a>에서 “보건복지부령으로 정하는 기준”이란 다음 각 호의 기준을 말한다. <span class="sfon">&lt;신설 2022. 12. 29.&gt;</span> </p>
+       <p class="pty1_de2h">1. 최근 1년간 외국인 관광객 수 </p> 
+       <p class="pty1_de2h">2. 외국인환자 유치기관 등 의료자원의 수 </p> 
+       <p class="pty1_de2h">3. 국내 관광객에 미치는 영향 </p> 
+       <p class="pty1_de2h">4. 그 밖에 외국인환자 유치에 관하여 보건복지부장관이 필요하다고 인정하는 사항 </p> 
+       <p class="pty1_de2_1">② <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191093','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191099','JO','');" href="javascript:;">제15조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191103','JO','');" href="javascript:;">제3항</a>에 따라 편중된 의료광고를 할 수 없는 특정 진료과목(이하 이 조에서 “특정 진료과목”이라 한다)은 다음 각 호와 같다. <span class="sfon">&lt;개정 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2h">1. 성형외과 </p> 
+       <p class="pty1_de2h">2. 피부과 </p> 
+       <p class="pty1_de2_1">③ 외국인환자 유치의료기관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191087','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191095','JO','');" href="javascript:;">제15조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191101','JO','');" href="javascript:;">제1항</a><a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191097','JO','');" href="javascript:;">제4호</a> 및 <a title="팝업으로 이동" class="link sfon4" onclick="javascript:fncLsLawPop('1033191109','JO','');" href="javascript:;">제5호</a>에 따른 장소에서 특정 진료과목에 대한 의료광고를 하는 경우에는 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link_not" onclick="javascript:joDelegatePop('286197','0014','00','010102','NOT','보건복지부장관이 정하는','50493');">보건복지부장관이 정하는</a> 바에 따라 특정 진료과목과 다른 진료과목의 균형을 맞추어 의료광고를 하여야 한다. <span class="sfon">&lt;개정 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2_1">④ 보건복지부장관은 제2항 및 제3항에 따른 특정 진료과목에 대한 의료광고를 위하여 필요한 경우에는 관계 중앙행정기관, 지방자치단체 또는 관계 기관ㆍ법인ㆍ단체 등에 필요한 자료의 제출이나 의견의 진술을 요청할 수 있다. <span class="sfon">&lt;개정 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2"> <span class="sfon">[제목개정 2022. 12. 29.]</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J15:0" id="J15:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0015', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016425', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+       <li><a href="javascript:;" onclick="javascript:openCtlInfoList('286197', '012594', '0015', '00');return false;" style="text-decoration: none;" title="관련규정 팝업으로 이동"> <img src="images/button/btn_entrust4_2.gif" alt="관련규제버튼" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001500" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="15:0:001500:98016425" /> <span class="bl"><label for="Y001500"> 제15조(외국인환자 사전ㆍ사후관리) </label> </span> ① 삭제 <span class="sfon">&lt;2024. 7. 10.&gt;</span> </p>
+       <p class="pty1_de2_1">② <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191129','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191131','JO','');" href="javascript:;">제16조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191123','JO','');" href="javascript:;">제1항</a>에 따라 국외에 있는 의료인에게 같은 항 각 호의 행위(이하 “외국인환자 사전ㆍ사후관리”라 한다)를 하려는 사람은 다음 각 호의 시설과 장비를 갖춰야 한다. <span class="sfon">&lt;개정 2022. 12. 29., 2024. 7. 10.&gt;</span> </p> 
+       <p class="pty1_de2h">1. 외국인환자 사전ㆍ사후관리실. 다만, 시ㆍ도지사가 필요하다고 인정하는 경우에는 진료실을 외국인환자 사전ㆍ사후관리실로 사용할 수 있다. </p> 
+       <p class="pty1_de2h">2. 데이터 및 화상(畵像)을 전송ㆍ수신할 수 있는 단말기, 서버, 정보통신망 등의 장비 </p> 
+       <p class="pty1_de2_1">③ <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191133','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191125','JO','');" href="javascript:;">제16조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191127','JO','');" href="javascript:;">제1항</a>에 따라 외국인환자 사전ㆍ사후관리를 하는 사람은 매년 2월 말일까지 전년도의 외국인환자 사전ㆍ사후관리 현황에 관한 다음 각 호의 사항을 시ㆍ도지사에게 알려야 한다. <span class="sfon">&lt;개정 2022. 12. 29., 2024. 7. 10.&gt;</span> </p> 
+       <p class="pty1_de2h">1. 외국인환자의 국적, 성별, 출생연도, 진료과목 및 주 질병ㆍ부상명 </p> 
+       <p class="pty1_de2h">2. 외국인환자 사전ㆍ사후관리의 내용 및 기간 </p> 
+       <p class="pty1_de2_1">④ 시ㆍ도지사는 제3항에 따른 전년도의 외국인환자 사전ㆍ사후관리 현황을 취합하여 매년 3월 31일까지 보건복지부장관에게 통보해야 한다. <span class="sfon">&lt;신설 2022. 12. 29.&gt;</span> </p> 
+       <p class="pty1_de2_1">⑤ 제3항에 따른 통지 및 제4항에 따른 통보는 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link_not" onclick="javascript:joDelegatePop('286197','0015','00','010102','NOT','보건복지부장관이 정하는','50495');">보건복지부장관이 정하는</a> 전산시스템을 통하여 할 수 있다. <span class="sfon">&lt;신설 2022. 12. 29., 2024. 7. 10.&gt;</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J15:2" id="J15:2"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0015', '02' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001502" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="15:2:001502:98016427" /> <span class="bl"><label for="Y001502"> 제15조의2(외국 보건의료인 연수에 관한 데이터베이스 구축ㆍ운영 등) </label> </span> ① 법 제 17조의2제1항에 따른 외국 보건의료인 연수에 관한 데이터베이스는 다음 각 호의 정보를 포함해야 한다. </p>
+       <p class="pty1_de2h">1. 외국 보건의료인 연수기관의 명칭, 주소 및 규모 </p> 
+       <p class="pty1_de2h">2. 외국 보건의료인 연수 참가자의 이름, 국적, 여권번호 및 경력 </p> 
+       <p class="pty1_de2h">3. 외국 보건의료인 연수계획 및 연수실시 결과 </p> 
+       <p class="pty1_de2h">4. 그 밖에 외국 보건의료인 연수의 사후관리를 위해 필요한 정보 </p> 
+       <p class="pty1_de2_1">② 보건복지부장관은 제1항 각 호의 정보를 전자적 형태로 구축해야 한다. </p> 
+       <p class="pty1_de2_1">③ 보건복지부장관은 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190899','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190901','JO','');" href="javascript:;">제17조의2</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190903','JO','');" href="javascript:;">제2항</a>에 따라 외국 보건의료인 연수 관련 자료의 제출을 요청할 때에는 자료의 사용 목적ㆍ범위 및 제출방법 등을 명시하여 서면(전자문서를 포함한다)으로 해야 한다. </p> 
+       <p class="pty1_de2_1">④ 제1항부터 제3항까지에서 규정한 사항 외에 데이터베이스 구축ㆍ운영 및 자료의 제출 요청에 필요한 사항은 <a href="#AJAX" title="팝업으로 이동" class="delegatedAdmRul_link_not" onclick="javascript:joDelegatePop('286197','0015','02','010102','NOT','보건복지부장관이 정한다','50497');">보건복지부장관이 정한다</a>. </p> 
+       <p class="pty1_de2"> <span class="sfon">[본조신설 2019. 12. 12.]</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J15:3" id="J15:3"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0015', '03' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016709', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001503" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="15:3:001503:98016709" /> <span class="bl"><label for="Y001503"> 제15조의3(정책협의회) </label> </span> ① <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033191139','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033191137','JO','');" href="javascript:;">제19조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033191135','JO','');" href="javascript:;">제1항</a>에 따른 정책협의회(이하 “정책협의회”라 한다)는 위원장 1명을 포함하여 15명 이내의 위원으로 구성한다. </p>
+       <p class="pty1_de2_1">② 정책협의회의 위원장은 정책협의회를 대표하고 정책협의회의 업무를 총괄한다. </p> 
+       <p class="pty1_de2_1">③ 정책협의회의 회의는 재적위원 과반수의 출석으로 개의(開議)하고 출석위원 과반수의 찬성으로 의결한다. </p> 
+       <p class="pty1_de2_1">④ 정책협의회의 업무를 효율적으로 수행하기 위하여 정책협의회에 분과협의회(이하 “분과협의회”라 한다)를 둘 수 있다. </p> 
+       <p class="pty1_de2_1">⑤ 제1항부터 제4항까지에서 규정한 사항 외에 정책협의회 및 분과협의회의 구성 및 운영 등에 필요한 사항은 정책협의회의 위원장이 정한다. </p> 
+       <p class="pty1_de2"> <span class="sfon">[본조신설 2024. 7. 10.]</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <a name="J16:0" id="J16:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0016', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001600" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="16:0:001600:98016711" /> <span class="bl"><label for="Y001600"> 제16조(지원기관 지정신청서) </label> </span> <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190893','ALLJO','');" href="javascript:;">영</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190895','JO','');" href="javascript:;">제11조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190897','JO','');" href="javascript:;">제2항</a>에 따른 지정신청서(전자문서로 된 지정신청서를 포함한다)는 <a title="팝업으로 이동" class="link sfon6" onclick="javascript:fncLsLawPop('1033190891','BF','');" href="javascript:;">별지 제10호서식</a>과 같다. </p> 
+      </div> 
+     </div> 
+     <a name="J17:0" id="J17:0"></a> 
+     <div class="pgroup"> 
+      <ul class="lawico01"> 
+       <li><a title="조문체계도 팝업으로 이동" style="text-decoration: none;" onclick="javascript:joStmdPop('286197', '0017', '00' );return false; " href="#AJAX"> <img alt="조문체계도버튼" src="/LSW/images/button/btn_jostmdico.gif" /> </a></li> 
+       <li><a title="연혁 팝업으로 이동" style="text-decoration: none;" onclick="javascript:fJoHstShow(this, '012594', '286197', '98016713', '010202');return false;" href="#AJAX"> <img alt="연혁" src="/LSW/images/button/btn_year3.gif" /> </a></li> 
+      </ul> 
+      <div class="lawcon"> 
+       <p class="pty1_p4"> <input name="joNoList" id="Y001700" style="vertical-align: middle;" onclick="javascript:getJoSelectLayer(this,'');" type="checkbox" value="17:0:001700:98016713" /> <span class="bl"><label for="Y001700"> 제17조(외국인환자 유치기관의 등록 취소) </label> </span> 시ㆍ도지사는 <a title="팝업으로 이동" class="link sfon1" onclick="javascript:fncLsLawPop('1033190907','ALLJO','');" href="javascript:;">법</a> <a title="팝업으로 이동" class="link sfon2" onclick="javascript:fncLsLawPop('1033190905','JO','');" href="javascript:;">제24조</a><a title="팝업으로 이동" class="link sfon3" onclick="javascript:fncLsLawPop('1033190909','JO','');" href="javascript:;">제1항</a>에 따라 외국인환자 유치기관의 등록을 취소한 경우에는 그 사실을 시ㆍ도의 인터넷 홈페이지에 게시해야 한다. </p>
+       <p class="pty1_de2"> <span class="sfon">[전문개정 2020. 10. 8.]</span> </p> 
+       <p></p> 
+      </div> 
+     </div> 
+     <!-- 조문정보 --> 
+     <!-- 부칙 영역 끝 --> 
+     <br /> 
+     <div id="arDivArea"> 
+      <a name="arArea"></a> 
+      <a name="J12636055" id="J12636055"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <a class="nun" onclick="javascript:arView('ar12636055','<보건복지부령 제407호, 2016. 6. 23.>'); return false;" href="#AJAX"> <img id="ar12636055btn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제407호, 2016. 6. 23.>조문목록 접기" src="/LSW/images/button/btn_cocl.gif" /> </a> <input name="arInf" id="chk12636055" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제407호, 2016. 6. 23.>체크박스 " value="12636055" /> <a class="nun" onclick="javascript:arView('ar12636055','<보건복지부령 제407호, 2016. 6. 23.>'); return false;" href="#AJAX"> <label for="chk12636055"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제407호, 2016. 6. 23.&gt;</span> </a> <a class="nun" onclick="javascript:arView('ar12636055','<보건복지부령 제407호, 2016. 6. 23.>');return false;" href="#AJAX"> <img id="ar12636055MrBtn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제407호, 2016. 6. 23.>보기" src="/LSW/images/button/btn_more_bu.gif" /> </a> </p> 
+       <p class="pty3_dep1"><span class="bl">제1조(시행일)</span> 이 규칙은 2016년 6월 23일부터 시행한다.</p>
+       <div id="ar12636055">
+        <p class="pty3_dep1"><span class="bl">제2조(다른 법령의 개정)</span> 의료법 시행규칙 일부를 다음과 같이 개정한다.</p>
+        <p class="pty3_dep2"> 제19조의3부터 제19조의9까지를 각각 삭제한다.</p>
+        <p class="pty3_dep2"> 별지 제9호의4서식부터 별지 제9호의8서식까지를 각각 삭제한다.</p>
+       </div> 
+      </div> 
+      <a name="J12636057" id="J12636057"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <img id="ar12636057btn" style="vertical-align: middle;" alt="부칙<보건복지부령 제529호, 2017. 10. 13.>조문목록 없음" src="/LSW/images/button/btn_dot.gif" /> <input name="arInf" id="chk12636057" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제529호, 2017. 10. 13.>체크박스 " value="12636057" /> <a class="nun" onclick="javascript:arView('ar12636057','<보건복지부령 제529호, 2017. 10. 13.>'); return false;" href="#AJAX"> <label for="chk12636057"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제529호, 2017. 10. 13.&gt;</span> </a> </p> 
+       <p class="pty3_dep1">이 규칙은 공포한 날부터 시행한다.</p> 
+      </div> 
+      <a name="J12636059" id="J12636059"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <a class="nun" onclick="javascript:arView('ar12636059','<보건복지부령 제665호, 2019. 8. 12.>'); return false;" href="#AJAX"> <img id="ar12636059btn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제665호, 2019. 8. 12.>조문목록 접기" src="/LSW/images/button/btn_cocl.gif" /> </a> <input name="arInf" id="chk12636059" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제665호, 2019. 8. 12.>체크박스 " value="12636059" /> <a class="nun" onclick="javascript:arView('ar12636059','<보건복지부령 제665호, 2019. 8. 12.>'); return false;" href="#AJAX"> <label for="chk12636059"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제665호, 2019. 8. 12.&gt;</span> </a> <a class="nun" onclick="javascript:arView('ar12636059','<보건복지부령 제665호, 2019. 8. 12.>');return false;" href="#AJAX"> <img id="ar12636059MrBtn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제665호, 2019. 8. 12.>보기" src="/LSW/images/button/btn_more_bu.gif" /> </a> </p> 
+       <p class="pty3_dep1"><span class="bl">제1조(시행일)</span> 이 규칙은 공포한 날부터 시행한다.</p>
+       <div id="ar12636059">
+        <p class="pty3_dep1"><span class="bl">제2조(외국인환자 유치에 대한 등록사항 변경에 관한 적용례)</span> 제5조제4항의 개정규정은 이 규칙 시행 이후 외국인환자 유치에 대하여 등록한 사항이 변경되는 경우부터 적용한다.</p>
+       </div> 
+      </div> 
+      <a name="J12636061" id="J12636061"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <img id="ar12636061btn" style="vertical-align: middle;" alt="부칙<보건복지부령 제672호,  2019. 9. 27.>조문목록 없음" src="/LSW/images/button/btn_dot.gif" /> <input name="arInf" id="chk12636061" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제672호,  2019. 9. 27.>체크박스 " value="12636061" /> <a class="nun" onclick="javascript:arView('ar12636061','<보건복지부령 제672호,  2019. 9. 27.>'); return false;" href="#AJAX"> <label for="chk12636061"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제672호, 2019. 9. 27.&gt;</span> </a> <a class="nun" onclick="javascript:fncArLawPop('어려운 법령용어 정비를 위한 48개 법령의 일부개정에 관한 보건복지부령', '20190927', '00672');" href="#AJAX"> <span class="sfon">(어려운 법령용어 정비를 위한 48개 법령의 일부개정에 관한 보건복지부령) </span> </a> </p> 
+       <p class="pty3_dep1">이 규칙은 공포한 날부터 시행한다.</p> 
+      </div> 
+      <a name="J12636063" id="J12636063"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <a class="nun" onclick="javascript:arView('ar12636063','<보건복지부령 제690호, 2019. 12. 12.>'); return false;" href="#AJAX"> <img id="ar12636063btn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제690호, 2019. 12. 12.>조문목록 접기" src="/LSW/images/button/btn_cocl.gif" /> </a> <input name="arInf" id="chk12636063" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제690호, 2019. 12. 12.>체크박스 " value="12636063" /> <a class="nun" onclick="javascript:arView('ar12636063','<보건복지부령 제690호, 2019. 12. 12.>'); return false;" href="#AJAX"> <label for="chk12636063"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제690호, 2019. 12. 12.&gt;</span> </a> <a class="nun" onclick="javascript:arView('ar12636063','<보건복지부령 제690호, 2019. 12. 12.>');return false;" href="#AJAX"> <img id="ar12636063MrBtn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제690호, 2019. 12. 12.>보기" src="/LSW/images/button/btn_more_bu.gif" /> </a> </p> 
+       <p class="pty3_dep1"><span class="bl">제1조(시행일)</span> 이 규칙은 공포한 날부터 시행한다. 다만, 제15조의2의 개정규정은 2019년 12월 12일부터 시행한다.</p>
+       <div id="ar12636063">
+        <p class="pty3_dep1"><span class="bl">제2조(의료 해외진출 변경신고에 관한 적용례)</span> 제3조제2항 및 별지 제1호서식의 개정규정은 이 규칙 시행 이후 신고내용이 변경되는 경우부터 적용한다.</p>
+       </div> 
+      </div> 
+      <a name="J12636065" id="J12636065"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <img id="ar12636065btn" style="vertical-align: middle;" alt="부칙<보건복지부령 제753호, 2020. 10. 8.>조문목록 없음" src="/LSW/images/button/btn_dot.gif" /> <input name="arInf" id="chk12636065" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제753호, 2020. 10. 8.>체크박스 " value="12636065" /> <a class="nun" onclick="javascript:arView('ar12636065','<보건복지부령 제753호, 2020. 10. 8.>'); return false;" href="#AJAX"> <label for="chk12636065"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제753호, 2020. 10. 8.&gt;</span> </a> </p> 
+       <p class="pty3_dep1">이 규칙은 2021년 1월 1일부터 시행한다.</p> 
+      </div> 
+      <a name="J12636067" id="J12636067"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <a class="nun" onclick="javascript:arView('ar12636067','<보건복지부령 제929호,  2022. 12. 29.>'); return false;" href="#AJAX"> <img id="ar12636067btn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제929호,  2022. 12. 29.>조문목록 접기" src="/LSW/images/button/btn_cocl.gif" /> </a> <input name="arInf" id="chk12636067" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제929호,  2022. 12. 29.>체크박스 " value="12636067" /> <a class="nun" onclick="javascript:arView('ar12636067','<보건복지부령 제929호,  2022. 12. 29.>'); return false;" href="#AJAX"> <label for="chk12636067"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제929호, 2022. 12. 29.&gt;</span> </a> <a class="nun" onclick="javascript:arView('ar12636067','<보건복지부령 제929호,  2022. 12. 29.>');return false;" href="#AJAX"> <img id="ar12636067MrBtn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제929호,  2022. 12. 29.>보기" src="/LSW/images/button/btn_more_bu.gif" /> </a> </p> 
+       <p class="pty3_dep1"><span class="bl">제1조(시행일)</span> 이 규칙은 공포한 날부터 시행한다.</p>
+       <div id="ar12636067">
+        <p class="pty3_dep1"><span class="bl">제2조(외국인환자 사전ㆍ사후관리 현황 통지에 관한 적용례)</span> 제15조제3항의 개정규정은 2022년도 외국인환자 사전ㆍ사후관리 현황을 시ㆍ도지사에게 알리는 경우부터 적용한다.</p>
+        <p class="pty3_dep1"><span class="bl">제3조(외국인환자 유치사업자 자본금 요건에 관한 경과조치)</span> 이 규칙 시행 전에 종전의 규정에 따라 등록한 외국인환자 유치사업자(종합여행업의 경우만 해당한다)는 이 규칙 시행일부터 1년 이내에 제4조제3항 단서의 개정규정에 따른 자본금 요건을 갖춰야 한다.</p>
+       </div> 
+      </div> 
+      <a name="J12636069" id="J12636069"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <a class="nun" onclick="javascript:arView('ar12636069','<보건복지부령 제1029호,  2024. 7. 10.>'); return false;" href="#AJAX"> <img id="ar12636069btn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제1029호,  2024. 7. 10.>조문목록 접기" src="/LSW/images/button/btn_cocl.gif" /> </a> <input name="arInf" id="chk12636069" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제1029호,  2024. 7. 10.>체크박스 " value="12636069" /> <a class="nun" onclick="javascript:arView('ar12636069','<보건복지부령 제1029호,  2024. 7. 10.>'); return false;" href="#AJAX"> <label for="chk12636069"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제1029호, 2024. 7. 10.&gt;</span> </a> <a class="nun" onclick="javascript:arView('ar12636069','<보건복지부령 제1029호,  2024. 7. 10.>');return false;" href="#AJAX"> <img id="ar12636069MrBtn" style="vertical-align: middle;" alt="부칙 <보건복지부령 제1029호,  2024. 7. 10.>보기" src="/LSW/images/button/btn_more_bu.gif" /> </a> </p> 
+       <p class="pty3_dep1"><span class="bl">제1조(시행일)</span> 이 규칙은 공포한 날부터 시행한다.</p>
+       <div id="ar12636069">
+        <p class="pty3_dep1"><span class="bl">제2조(외국인환자 사전ㆍ사후관리 현황 통지에 관한 적용례)</span> 제15조제3항의 개정규정은 2024년도 외국인환자 사전ㆍ사후관리 현황을 시ㆍ도지사에게 알리는 경우부터 적용한다.</p>
+       </div> 
+      </div> 
+      <a name="J12636071" id="J12636071"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <img id="ar12636071btn" style="vertical-align: middle;" alt="부칙<보건복지부령 제1083호,  2024. 12. 31.>조문목록 없음" src="/LSW/images/button/btn_dot.gif" /> <input name="arInf" id="chk12636071" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제1083호,  2024. 12. 31.>체크박스 " value="12636071" /> <a class="nun" onclick="javascript:arView('ar12636071','<보건복지부령 제1083호,  2024. 12. 31.>'); return false;" href="#AJAX"> <label for="chk12636071"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제1083호, 2024. 12. 31.&gt;</span> </a> <a class="nun" onclick="javascript:fncArLawPop('자본금 기준 명확화를 위한 구급차의 기준 및 응급환자이송업의 시설 등 기준에 관한 규칙 등 2개 법령의 일부개정에 관한 보건복지부령', '20241231', '01083');" href="#AJAX"> <span class="sfon">(자본금 기준 명확화를 위한 구급차의 기준 및 응급환자이송업의 시설 등 기준에 관한 규칙 등 2개 법령의 일부개정에 관한 보건복지부령) </span> </a> </p> 
+       <p class="pty3_dep1">이 규칙은 공포한 날부터 시행한다.</p> 
+      </div> 
+      <a name="J12636153" id="J12636153"></a> 
+      <div class="pgroup"> 
+       <p class="pty3" style="margin-bottom: -1px;"> <img id="ar12636153btn" style="vertical-align: middle;" alt="부칙<보건복지부령 제1175호,  2026. 5. 15.>조문목록 없음" src="/LSW/images/button/btn_dot.gif" /> <input name="arInf" id="chk12636153" style="vertical-align: middle;" type="checkbox" alt="부칙 <보건복지부령 제1175호,  2026. 5. 15.>체크박스 " value="12636153" /> <a class="nun" onclick="javascript:arView('ar12636153','<보건복지부령 제1175호,  2026. 5. 15.>'); return false;" href="#AJAX"> <label for="chk12636153"> <span class="bl"> 부      칙</span> </label> <span class="sfon">&lt;보건복지부령 제1175호, 2026. 5. 15.&gt;</span> </a> </p> 
+       <p class="pty3_dep1">이 규칙은 공포한 날부터 시행한다.</p> 
+      </div> 
+     </div> 
+     <!-- 부칙 영역 끝 --> 
+     <!-- 별표 서식 시작 --> 
+     <input type="hidden" id="bylLnkDpYn" value="0" /> 
+     <br /> 
+     <a name="byl"></a> 
+     <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138385" id="J18138385"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138385');" href="#AJAX"> <img id="by18138385btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138385');" href="#AJAX"> [별지 제1호서식] 의료 해외진출 (신고서, 변경신고서) </a> <a href="flDownload.do?gubun=&amp;flSeq=164199467&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199469&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('0');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos0" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138385" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138385" name="164199469" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer0" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199467&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199467&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext0" value="[별지 제1호서식] 의료 해외진출 (신고서, 변경신고서)" style="float: left;">
+               [별지 제1호서식] 의료 해외진출 (신고서, 변경신고서) 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199467&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199467&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext0" value="[별지 제1호서식] 의료 해외진출 (신고서, 변경신고서)" style="float: left;">
+               [별지 제1호서식] 의료 해외진출 (신고서, 변경신고서) 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199469&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199469&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext0" value="[별지 제1호서식] 의료 해외진출 (신고서, 변경신고서)" style="float: left;">
+               [별지 제1호서식] 의료 해외진출 (신고서, 변경신고서) 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(0);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea0" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식1)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('0');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138387" id="J18138387"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138387');" href="#AJAX"> <img id="by18138387btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138387');" href="#AJAX"> [별지 제2호서식] 의료 해외진출 신고확인증 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199475&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199477&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('1');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos1" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138387" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138387" name="164199477" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer1" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199475&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199475&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext1" value="[별지 제2호서식] 의료 해외진출 신고확인증" style="float: left;">
+               [별지 제2호서식] 의료 해외진출 신고확인증 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199475&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199475&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext1" value="[별지 제2호서식] 의료 해외진출 신고확인증" style="float: left;">
+               [별지 제2호서식] 의료 해외진출 신고확인증 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199477&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199477&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext1" value="[별지 제2호서식] 의료 해외진출 신고확인증" style="float: left;">
+               [별지 제2호서식] 의료 해외진출 신고확인증 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(1);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea1" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식2)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('1');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138389" id="J18138389"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138389');" href="#AJAX"> <img id="by18138389btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138389');" href="#AJAX"> [별지 제3호서식] 외국인환자 유치의료기관 등록신청서 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199481&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199483&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('2');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos2" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138389" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138389" name="164199483" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer2" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199481&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199481&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext2" value="[별지 제3호서식] 외국인환자 유치의료기관 등록신청서" style="float: left;">
+               [별지 제3호서식] 외국인환자 유치의료기관 등록신청서 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199481&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199481&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext2" value="[별지 제3호서식] 외국인환자 유치의료기관 등록신청서" style="float: left;">
+               [별지 제3호서식] 외국인환자 유치의료기관 등록신청서 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199483&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199483&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext2" value="[별지 제3호서식] 외국인환자 유치의료기관 등록신청서" style="float: left;">
+               [별지 제3호서식] 외국인환자 유치의료기관 등록신청서 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(2);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea2" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식3)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('2');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138391" id="J18138391"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138391');" href="#AJAX"> <img id="by18138391btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138391');" href="#AJAX"> [별지 제4호서식] 외국인환자 유치사업자 등록신청서 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199487&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199489&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('3');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos3" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138391" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138391" name="164199489" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer3" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199487&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199487&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext3" value="[별지 제4호서식] 외국인환자 유치사업자 등록신청서" style="float: left;">
+               [별지 제4호서식] 외국인환자 유치사업자 등록신청서 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199487&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199487&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext3" value="[별지 제4호서식] 외국인환자 유치사업자 등록신청서" style="float: left;">
+               [별지 제4호서식] 외국인환자 유치사업자 등록신청서 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199489&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199489&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext3" value="[별지 제4호서식] 외국인환자 유치사업자 등록신청서" style="float: left;">
+               [별지 제4호서식] 외국인환자 유치사업자 등록신청서 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(3);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea3" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식4)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('3');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138393" id="J18138393"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138393');" href="#AJAX"> <img id="by18138393btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138393');" href="#AJAX"> [별지 제5호서식] 외국인환자 유치의료기관 등록증 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199493&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199495&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('4');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos4" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138393" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138393" name="164199495" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer4" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199493&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199493&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext4" value="[별지 제5호서식] 외국인환자 유치의료기관 등록증" style="float: left;">
+               [별지 제5호서식] 외국인환자 유치의료기관 등록증 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199493&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199493&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext4" value="[별지 제5호서식] 외국인환자 유치의료기관 등록증" style="float: left;">
+               [별지 제5호서식] 외국인환자 유치의료기관 등록증 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199495&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199495&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext4" value="[별지 제5호서식] 외국인환자 유치의료기관 등록증" style="float: left;">
+               [별지 제5호서식] 외국인환자 유치의료기관 등록증 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(4);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea4" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식5)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('4');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138395" id="J18138395"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138395');" href="#AJAX"> <img id="by18138395btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138395');" href="#AJAX"> [별지 제6호서식] 외국인환자 유치사업자 등록증 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199539&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199541&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('5');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos5" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138395" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138395" name="164199541" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer5" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199539&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199539&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext5" value="[별지 제6호서식] 외국인환자 유치사업자 등록증" style="float: left;">
+               [별지 제6호서식] 외국인환자 유치사업자 등록증 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199539&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199539&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext5" value="[별지 제6호서식] 외국인환자 유치사업자 등록증" style="float: left;">
+               [별지 제6호서식] 외국인환자 유치사업자 등록증 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199541&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199541&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext5" value="[별지 제6호서식] 외국인환자 유치사업자 등록증" style="float: left;">
+               [별지 제6호서식] 외국인환자 유치사업자 등록증 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(5);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea5" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식6)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('5');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138397" id="J18138397"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138397');" href="#AJAX"> <img id="by18138397btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138397');" href="#AJAX"> [별지 제7호서식] 외국인환자 유치기관 등록 갱신 신청서 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199545&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199547&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('6');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos6" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138397" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138397" name="164199547" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer6" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199545&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199545&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext6" value="[별지 제7호서식] 외국인환자 유치기관 등록 갱신 신청서" style="float: left;">
+               [별지 제7호서식] 외국인환자 유치기관 등록 갱신 신청서 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199545&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199545&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext6" value="[별지 제7호서식] 외국인환자 유치기관 등록 갱신 신청서" style="float: left;">
+               [별지 제7호서식] 외국인환자 유치기관 등록 갱신 신청서 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199547&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199547&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext6" value="[별지 제7호서식] 외국인환자 유치기관 등록 갱신 신청서" style="float: left;">
+               [별지 제7호서식] 외국인환자 유치기관 등록 갱신 신청서 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(6);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea6" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식7)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('6');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138639" id="J18138639"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138639');" href="#AJAX"> <img id="by18138639btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138639');" href="#AJAX"> [별지 제7호의2서식] (외국인환자 유치의료기관, 외국인환자 유치사업자) 등록사항 변경 신고서 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199551&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199553&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('7');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos7" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138639" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138639" name="164199553" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer7" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199551&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199551&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext7" value="[별지 제7호의2서식] (외국인환자 유치의료기관, 외국인환자 유치사업자) 등록사항 변경 신고서" style="float: left;">
+               [별지 제7호의2서식] (외국인환자 유치의료기관, 외국인환자 유치사업자) 등록사항 변경 신고서 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199551&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199551&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext7" value="[별지 제7호의2서식] (외국인환자 유치의료기관, 외국인환자 유치사업자) 등록사항 변경 신고서" style="float: left;">
+               [별지 제7호의2서식] (외국인환자 유치의료기관, 외국인환자 유치사업자) 등록사항 변경 신고서 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199553&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199553&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext7" value="[별지 제7호의2서식] (외국인환자 유치의료기관, 외국인환자 유치사업자) 등록사항 변경 신고서" style="float: left;">
+               [별지 제7호의2서식] (외국인환자 유치의료기관, 외국인환자 유치사업자) 등록사항 변경 신고서 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(7);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea7" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식7의2)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('7');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138641" id="J18138641"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138641');" href="#AJAX"> <img id="by18138641btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138641');" href="#AJAX"> [별지 제7호의3서식] [외국인환자유치의료기관, 외국인환자유치사업자(휴업, 폐업)] 신고서 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199557&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199559&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('8');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos8" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138641" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138641" name="164199559" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer8" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199557&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199557&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext8" value="[별지 제7호의3서식] [외국인환자유치의료기관, 외국인환자유치사업자(휴업, 폐업)] 신고서" style="float: left;">
+               [별지 제7호의3서식] [외국인환자유치의료기관, 외국인환자유치사업자(휴업, 폐업)] 신고서 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199557&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199557&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext8" value="[별지 제7호의3서식] [외국인환자유치의료기관, 외국인환자유치사업자(휴업, 폐업)] 신고서" style="float: left;">
+               [별지 제7호의3서식] [외국인환자유치의료기관, 외국인환자유치사업자(휴업, 폐업)] 신고서 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199559&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199559&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext8" value="[별지 제7호의3서식] [외국인환자유치의료기관, 외국인환자유치사업자(휴업, 폐업)] 신고서" style="float: left;">
+               [별지 제7호의3서식] [외국인환자유치의료기관, 외국인환자유치사업자(휴업, 폐업)] 신고서 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(8);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea8" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식7의3)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('8');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138643" id="J18138643"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138643');" href="#AJAX"> <img id="by18138643btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138643');" href="#AJAX"> [별지 제8호서식] 외국인환자 유치의료기관 평가ㆍ인증신청서(인증, 재인증) </a> <a href="flDownload.do?gubun=&amp;flSeq=164199563&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199565&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('9');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos9" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138643" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138643" name="164199565" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer9" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199563&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199563&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext9" value="[별지 제8호서식] 외국인환자 유치의료기관 평가ㆍ인증신청서(인증, 재인증)" style="float: left;">
+               [별지 제8호서식] 외국인환자 유치의료기관 평가ㆍ인증신청서(인증, 재인증) 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199563&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199563&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext9" value="[별지 제8호서식] 외국인환자 유치의료기관 평가ㆍ인증신청서(인증, 재인증)" style="float: left;">
+               [별지 제8호서식] 외국인환자 유치의료기관 평가ㆍ인증신청서(인증, 재인증) 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199565&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199565&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext9" value="[별지 제8호서식] 외국인환자 유치의료기관 평가ㆍ인증신청서(인증, 재인증)" style="float: left;">
+               [별지 제8호서식] 외국인환자 유치의료기관 평가ㆍ인증신청서(인증, 재인증) 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(9);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea9" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식8)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('9');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138645" id="J18138645"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138645');" href="#AJAX"> <img id="by18138645btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138645');" href="#AJAX"> [별지 제9호서식] 외국인환자 유치사업자 평가ㆍ인증신청서(인증, 재인증) </a> <a href="flDownload.do?gubun=&amp;flSeq=164199569&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199571&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('10');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos10" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138645" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138645" name="164199571" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer10" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199569&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199569&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext10" value="[별지 제9호서식] 외국인환자 유치사업자 평가ㆍ인증신청서(인증, 재인증)" style="float: left;">
+               [별지 제9호서식] 외국인환자 유치사업자 평가ㆍ인증신청서(인증, 재인증) 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199569&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199569&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext10" value="[별지 제9호서식] 외국인환자 유치사업자 평가ㆍ인증신청서(인증, 재인증)" style="float: left;">
+               [별지 제9호서식] 외국인환자 유치사업자 평가ㆍ인증신청서(인증, 재인증) 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199571&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199571&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext10" value="[별지 제9호서식] 외국인환자 유치사업자 평가ㆍ인증신청서(인증, 재인증)" style="float: left;">
+               [별지 제9호서식] 외국인환자 유치사업자 평가ㆍ인증신청서(인증, 재인증) 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(10);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea10" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식9)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('10');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138647" id="J18138647"></a> <a class="blu" onclick="javascript:bylInfoDiv('18138647');" href="#AJAX"> <img id="by18138647btn" style="margin-left: -13px;" alt="별표" src="/LSW/images/button/btn_coop.gif" /> </a> <a class="blu" onclick="javascript:bylInfoDiv('18138647');" href="#AJAX"> [별지 제10호서식] 의료 해외진출 및 외국인환자 유치 지원기관 지정신청서 </a> <a href="flDownload.do?gubun=&amp;flSeq=164199575&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_16.png" /> </a> <a href="flDownload.do?gubun=&amp;flSeq=164199577&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf.gif" /> </a> <a href="javascript:;" onclick="fileLayer('11');"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" id="imgPos11" /> </a> </span> 
+       <div class="d_cont_bx" id="byl18138647" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138647" name="164199577" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer11" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199575&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199575&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext11" value="[별지 제10호서식] 의료 해외진출 및 외국인환자 유치 지원기관 지정신청서" style="float: left;">
+               [별지 제10호서식] 의료 해외진출 및 외국인환자 유치 지원기관 지정신청서 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199575&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199575&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext11" value="[별지 제10호서식] 의료 해외진출 및 외국인환자 유치 지원기관 지정신청서" style="float: left;">
+               [별지 제10호서식] 의료 해외진출 및 외국인환자 유치 지원기관 지정신청서 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199577&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199577&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext11" value="[별지 제10호서식] 의료 해외진출 및 외국인환자 유치 지원기관 지정신청서" style="float: left;">
+               [별지 제10호서식] 의료 해외진출 및 외국인환자 유치 지원기관 지정신청서 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(11);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea11" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식10)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('11');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+      <li style="position: relative;"> <span class="pcf_cover "> <a name="J18138649" id="J18138649"></a>  [별지 제11호서식] 삭제 <span style="color: #024fce;"> &lt;2024. 7. 10.&gt; </span> </span> 
+       <div class="d_cont_bx" id="byl18138649" style="display: none;"> 
+       </div> 
+       <div class="d_cont_bx" id="svByl18138649" name="164199583" style="display: none; overflow: auto; width: 926px; height: 470px;"> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 시작--> 
+       <div class="byl_pop" id="fileSaveLayer12" style="padding: 7px; width: 500px; height: auto; position: absolute; overflow: visible; display: none; border: 2px solid #3082d0; background: white; border-radius: 10px; z-index: 1;"> 
+        <ul class="pconfile pb30 pcf_sec01" style="padding: 0px 0px 0px 50px; font-size: 1.1em;"> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199581&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199581&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwptext12" value="[별지 제11호서식] 삭제" style="float: left;">
+               [별지 제11호서식] 삭제 
+             </div> 
+             <div style="float: left;">
+              .hwp
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199581&amp;bylClsCd=110202" target="_blank"> <img alt="HWP파일 다운로드" src="/LSW/images/button/btn_han_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flExt=hwpx&amp;flSeq=164199581&amp;bylClsCd=110202" target="_blank"> 
+             <div id="hwpxtext12" value="[별지 제11호서식] 삭제" style="float: left;">
+               [별지 제11호서식] 삭제 
+             </div> 
+             <div style="float: left;">
+              .hwpx
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> 
+          <div> 
+           <a href="flDownload.do?gubun=&amp;flSeq=164199583&amp;bylClsCd=110202" target="_blank"> <img alt="PDF파일 다운로드" src="/LSW/images/button/btn_pdf_25.png" style="float: left; margin-right: 10px; margin-top: -3px;" /> </a> 
+           <div> 
+            <a href="flDownload.do?gubun=&amp;flSeq=164199583&amp;bylClsCd=110202" target="_blank"> 
+             <div id="pdftext12" value="[별지 제11호서식] 삭제" style="float: left;">
+               [별지 제11호서식] 삭제 
+             </div> 
+             <div style="float: left;">
+              .pdf
+             </div> </a> 
+           </div> 
+          </div> </li> 
+         <hr style="border: solid 0.1px Gainsboro; display: block; margin-top: 23px;" /> 
+         <li> <p style="margin-bottom: 3px;">        아래 <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link.gif" style="margin-top: 1px;" />을 눌러 주소를 복사하세요 </p> 
+          <div> 
+           <a href="javascript:;" onclick="copyToClipBoard(12);"> <img alt="법령별표 한글주소" src="/LSW/images/button/btn_link_25.png" style="float: left; margin-right: 10px; margin-top: 10px;" /> </a> 
+           <div> 
+            <label for="textarea"> <textarea class="bylKoAddr" id="textarea12" style="width: 415px; height: 35px; border-color: #c2c0c0; padding: 8px; resize: none;" readonly="">
+												https://www.law.go.kr/법령별표서식/(의료 해외진출 및 외국인환자 유치 지원에 관한 법률 시행규칙,20260515,서식11)
+											</textarea> </label> 
+           </div> 
+          </div> </li> 
+         <div style="float: right; margin-top: -10px;"> 
+          <button type="button" onclick="delLayer('12');" style="width: 60px; height: 33px; color: white; 
+									background: #1c76c3; margin-right: 14px; margin-top: 10px; border-radius: 5px;"> 닫힘 </button> 
+         </div> 
+        </ul> 
+       </div> 
+       <!-- 별표 서식 레이어 팝업 끝--> </li> 
+     </ul> 
+     <br /> 
+     <!-- 별표 서식 끝 --> 
+    </div> 
+   </div> 
+  </div> 
+ </body>
+</html>
