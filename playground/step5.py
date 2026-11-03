@@ -1,6 +1,6 @@
-"""Step 5: 판정 기준(회사 결정) 넣기
+"""Step 5: 판정 기준(운영 방침) 넣기
 
-목적: 법 조문만으로는 판단할 수 없는 '우리 회사의 해석'이 결과를 바꾸는지 본다.
+목적: 법 조문만으로는 판단할 수 없는 '서비스 운영 방침(가정)'이 결과를 바꾸는지 본다.
 Step 4와 다른 점:
 - 샘플을 golden.jsonl에서 ID로 읽음. g004(정답 ok: 韓国形成外科専門医), g037(정답 caution: ダウンタイムが少ない)
 - 기준 없이 2건 실행 → SYSTEM에 「判定基準」 두 줄을 추가하고 2건 다시 실행 (아래 결과 순서: g004, g037, g004, g037)
@@ -48,7 +48,7 @@ span は入力に文字どおり含まれる最短の部分文字列にしてく
 
 SYSTEM += """
 
-# 判定基準（会社の決定事項）
+# 判定基準（運営方針・仮定）
 - 韓国の医師を「医師」「専門医」と表記することは許容する。判定しない。
 - 「ダウンタイムが少ない」は比較対象が不明確なため caution。具体的な期間を書けば ok。
 """
@@ -76,25 +76,25 @@ print("---")
 print(resp.usage_metadata.candidates_token_count, resp.usage_metadata.thoughts_token_count)
 
 
-#  heewon 🦄   ~/Documents/k-beauty-rag   main ±  .venv/bin/python playground/step5.py
+# $ .venv/bin/python playground/step5.py
 # 정답: ok []
 # violation
 # JP violation 韓国形成外科専門医 | 医療法 第六条の五第三項
 # ---
 # 168 1561
-#  heewon 🌙   ~/Documents/k-beauty-rag   main ±  .venv/bin/python playground/step5.py
+# $ .venv/bin/python playground/step5.py
 # 정답: caution [('JP', 'ダウンタイムが少ない')]
 # caution
 # JP caution ダウンタイムが少ない | 医療法 第六条の五第２項第二号
 # KR caution ダウンタイムが少ない | 의료법 제56조제2항제8호
 # ---
 # 333 784
-#  heewon 🎉   ~/Documents/k-beauty-rag   main ±  .venv/bin/python playground/step5.py
+# $ .venv/bin/python playground/step5.py
 # 정답: ok []
 # ok
 # ---
 # 9 387
-#  heewon 🚀   ~/Documents/k-beauty-rag   main ±  .venv/bin/python playground/step5.py
+# $ .venv/bin/python playground/step5.py
 # 정답: caution [('JP', 'ダウンタイムが少ない')]
 # caution
 # JP caution ダウンタイムが少ない | 医療法 第六条の五第2項第二号
@@ -104,10 +104,10 @@ print(resp.usage_metadata.candidates_token_count, resp.usage_metadata.thoughts_t
 
 # ===== 정리 =====
 # Step 4 대비 달라진 점:
-# - g004: 기준 없이 violation(6条の5第3項, 広告可能事項 외) → 기준 넣고 ok. 법만 보면 모델이 맞고, 회사 결정이 결과를 뒤집었다.
+# - g004: 기준 없이 violation(6条の5第3項, 広告可能事項 외) → 기준 넣고 ok. 법만 보면 모델이 맞고, 운영 방침이 결과를 뒤집었다.
 #   thinking도 1,561 → 387 토큰으로 줄었다.
 # - g037: 기준 유무와 관계없이 caution. 이 경계 사례 규칙은 이 샘플에서는 효과가 없었다(ablation).
 # 한계:
 # - g037에서 KR 8호 caution도 냈는데 정답엔 JP만 있다. 정답 쪽 보완 후보.
 # - 조문 표기가 「第２項」「第2項」「第二号」로 제각각. 스키마 지시나 채점기 정규화가 필요하다.
-# → 라벨링 가이드(판정 기준)를 프롬프트에 넣는 이유: 모델이 법을 몰라서가 아니라 우리 회사의 결정을 몰라서.
+# → 라벨링 가이드(판정 기준)를 프롬프트에 넣는 이유: 모델이 법을 몰라서가 아니라 서비스의 운영 방침을 몰라서.

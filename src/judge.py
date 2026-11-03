@@ -32,11 +32,11 @@ class Judgment(BaseModel):
 
 
 SYSTEM = """あなたは韓国・日本の医療広告規制に詳しい審査担当者です。
-K-Beauty（韓国の美容医療を日本居住者に紹介するサービス、運営主体は韓国法人）の管理画面で、
+韓国の美容医療を日本居住者に紹介する仲介プラットフォーム（運営主体は韓国法人と仮定）の管理画面で、
 韓国の医療機関が登録した施術の「タイトル」と「説明」を審査します。
 
 # 判定ルール
-以下の「판정 기준 (policy)」が判定基準です。必ずこの基準に従ってください（会社決定事項、カテゴリ、境界事例を含む）。
+以下の「판정 기준 (policy)」が判定基準です。必ずこの基準に従ってください（運営方針、カテゴリ、境界事例を含む）。
 - 日本・韓国の両方の基準で審査する。同じ表現が両国に該当する場合は finding を国ごとに分けて書く。
 - 該当がなければ verdict=ok、findings=[]。
 - verdict は findings の severity の最大値（violation > caution > ok）。
@@ -71,7 +71,7 @@ def make_cache(client: genai.Client, model: str, ttl_seconds: int = 3600) -> Opt
         cache = client.caches.create(
             model=model,
             config=types.CreateCachedContentConfig(
-                display_name="k-beauty-core-corpus",
+                display_name="medad-core-corpus",
                 system_instruction=system_text(),
                 contents=[corpus_content()],
                 ttl=f"{ttl_seconds}s",
