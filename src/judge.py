@@ -1,6 +1,7 @@
-"""시술 문구 1건을 Gemini로 판정한다 (Phase 1: RAG 없이 core corpus를 통째로 넣는 방식).
+"""시술 문구 1건을 Gemini로 판정한다.
 
-core corpus는 context cache에 올려 두고, 문구마다 짧은 요청만 보낸다.
+- Phase 1 judge(): RAG 없이 core corpus를 통째로 넣는다. corpus는 context cache에 올려 두고 문구마다 짧은 요청만 보낸다.
+- Phase 2 judge_rag(): 검색으로 고른 청크 k개만 근거 자료로 넣는다. 판정 기준(policy.md)과 출력 형식은 같다.
 """
 import pathlib
 from typing import Literal, Optional
@@ -96,6 +97,33 @@ def judge(client: genai.Client, model: str, cache_name: Optional[str], title: st
         contents = [corpus_content(), types.Content(role="user", parts=[types.Part(text=prompt)])]
     resp = client.models.generate_content(
         model=model, contents=contents, config=types.GenerateContentConfig(**config))
+    u = resp.usage_metadata
+    usage = {
+        "prompt": u.prompt_token_count or 0,
+        "cached": u.cached_content_token_count or 0,
+        "output": (u.candidates_token_count or 0) + (u.thoughts_token_count or 0),
+    }
+    return resp.parsed, usage
+
+
+RAG_NOTE = """
+※ 根拠資料は、この施術文句で検索して取り出した抜粋です。資料にない条文は書かないでください。
+抜粋に該当する規定がない場合でも、判定基準(policy)に照らして問題があれば finding を書き、rule には判定基準に書かれた条文を書いてください。"""
+
+
+def context_content(chunks) -> types.Content:
+    """검색된 청크를 근거 자료 블록으로. 모델이 rule·source_file을 정확히 쓰도록 ref와 source_file을 앞에 붙인다."""
+    body = "\n\n".join(f"## {c['ref']}\nsource_file: {c['source_file']}\n{c['text']}" for c in chunks)
+    return types.Content(role="user", parts=[types.Part(text=body)])
+
+
+def judge_rag(client: genai.Client, model: str, chunks, title: str, description: str):
+    """검색된 chunks(dict 목록)만 근거로 판정한다. 판정 결과(Judgment)와 토큰 사용량을 돌려준다."""
+    prompt = f"次の施術を審査してください。\n\n[タイトル]\n{title}\n\n[説明]\n{description}"
+    config = dict(temperature=0, response_mime_type="application/json", response_schema=Judgment,
+                  system_instruction=system_text() + RAG_NOTE)
+    contents = [context_content(chunks), types.Content(role="user", parts=[types.Part(text=prompt)])]
+    resp = client.models.generate_content(model=model, contents=contents, config=types.GenerateContentConfig(**config))
     u = resp.usage_metadata
     usage = {
         "prompt": u.prompt_token_count or 0,

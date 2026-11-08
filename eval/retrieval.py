@@ -24,7 +24,8 @@ from google import genai
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "eval"))
-from embed import embed, emb_path, load_chunks  # noqa: E402
+from embed import load_chunks  # noqa: E402
+from retrieve import fused_scores, query_scores  # noqa: E402
 from score import article_match  # noqa: E402
 
 
@@ -71,7 +72,6 @@ def main():
 
     load_dotenv(ROOT / ".env")
     chunks = load_chunks()
-    docs = np.load(emb_path())
     golden = [json.loads(l) for l in (ROOT / "eval/golden.jsonl").read_text().splitlines() if l.strip()]
     samples = gold_units(golden, chunks)
 
@@ -80,27 +80,13 @@ def main():
     if args.query != "orig" or args.fuse:
         rw = {r["id"]: r["rewrite"] for r in map(json.loads, (ROOT / f"data/queries/{args.rewrite}.jsonl").read_text().splitlines())}
 
-    def scores_for(kind, examples):
-        """kind: orig/rewrite/both 질의로 (질의, chunk) 점수. examples가 있으면 예시 벡터와 max."""
-        qs = [q if kind == "orig" else rw[sid] if kind == "rewrite" else f"{q}\n{rw[sid]}" for sid, q, _ in samples]
-        qv = embed(client, qs, "RETRIEVAL_QUERY")
-        sc = qv @ docs.T
-        if examples:
-            ex = np.load(emb_path(kind=examples))  # 예시가 없는 chunk의 행은 0 벡터 → 점수 0
-            sc = np.maximum(sc, qv @ ex.T)
-        return sc
+    def queries(kind):
+        return [q if kind == "orig" else rw[sid] if kind == "rewrite" else f"{q}\n{rw[sid]}" for sid, q, _ in samples]
 
     if args.fuse:
-        # RRF: 두 검색의 순위로 1/(K+순위)를 더한다. 점수 척도가 달라도 섞을 수 있다
-        K = 60
-        a = scores_for("orig", args.fuse)    # 원문 질의 + 예시 벡터
-        b = scores_for("rewrite", None)      # 바꿔 쓴 질의 + 원문 벡터
-        scores = np.zeros_like(a)
-        for sc in (a, b):
-            rank = np.argsort(np.argsort(-sc, axis=1), axis=1)  # 0부터 시작하는 순위
-            scores += 1.0 / (K + rank + 1)
+        scores = fused_scores(client, queries("orig"), queries("rewrite"), args.fuse)
     else:
-        scores = scores_for(args.query, args.examples)
+        scores = query_scores(client, queries(args.query), args.examples)
     order = np.argsort(-scores, axis=1)  # 전체 순위
 
     # finding마다 「근거 chunk 중 가장 높은 순위」를 구한다
