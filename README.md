@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | 0 | 판정 기준, 평가셋 50건 → 223건 | ✅ | [`policy.md`](docs/policy.md), [`labeling-guide.md`](eval/labeling-guide.md) |
 | 1 | RAG 없이 자료 전체를 넣는 long-context baseline | ✅ | [`phase1-log.md`](docs/phase1-log.md) |
-| 2 | 직접 만든 RAG (청킹, multi-vector, 질의 바꿔 쓰기, RRF) | 검색·판정까지 ✅, DB 미적용 | [`phase2-retrieval-log.md`](docs/phase2-retrieval-log.md) |
+| 2 | 직접 만든 RAG (청킹, multi-vector, 질의 바꿔 쓰기, RRF, pgvector) | 검색·판정 ✅, 하이브리드·rerank 진행 중 | [`phase2-retrieval-log.md`](docs/phase2-retrieval-log.md) |
 | 3 | Vertex AI RAG Engine과 비교 | 예정 | |
 
 ## 핵심 결과 (2026-11-08, 223건, `gemini-3.8-flash`)
@@ -32,13 +32,15 @@
 | --- | --- |
 | `docs/design.md` | 설계 (GCP 구성, 지식 소스, 판정 카테고리) |
 | `docs/policy.md` | 판정 기준. 모델 프롬프트에 매번 넣고, 정답을 만들 때도 쓴다 |
+| `docker-compose.yml`, `db/` | 로컬 검색 DB (Postgres + pgvector + pg_bigm) |
 | `data/raw/{kr,jp}/` | 검색 대상 원문 13개 (2026-11-07 재선정) |
 | `data/chunks/` | 청크(`chunks.jsonl`), 청크별 광고 예시(`examples_v3.jsonl`) |
 | `data/queries/` | 질의 바꿔 쓰기 결과 |
 | `data/corpus/` | 통째로 넣는 자료. `core_v2.md`가 현재 자료, `core.md`는 Phase 1 당시 자료 |
 | `eval/golden.jsonl` | 평가셋 223건 (`golden.md`는 읽기용 렌더링) |
 | `src/chunk.py` → `augment.py` → `embed.py` | 청킹 → 청크별 광고 예시 → 임베딩 |
-| `src/rewrite.py`, `src/retrieve.py` | 질의 바꿔 쓰기, RRF 검색 |
+| `src/load_db.py` | 청크와 벡터를 DB에 적재 |
+| `src/rewrite.py`, `src/retrieve.py` | 질의 바꿔 쓰기, RRF 검색 (pgvector) |
 | `src/judge.py` | Gemini 판정 (`judge`: 자료 전체, `judge_rag`: 검색 결과만) |
 | `eval/retrieval.py`, `eval/run_eval.py`, `eval/score.py` | 검색 평가, 판정 실행, 채점 |
 
@@ -53,6 +55,7 @@ gcloud auth application-default login
 .venv/bin/python src/augment.py --out examples_v3 --variant v2c   # 청크별 광고 예시 (LLM)
 .venv/bin/python src/rewrite.py                       # 평가셋 질의 바꿔 쓰기 (LLM)
 .venv/bin/python src/embed.py && .venv/bin/python src/embed.py --examples examples_v3
+docker compose up -d --build && .venv/bin/python src/load_db.py   # DB 기동 + 적재
 
 .venv/bin/python eval/retrieval.py --fuse examples_v3              # 검색 재현율
 .venv/bin/python eval/run_eval.py --rag 10                         # RAG 판정

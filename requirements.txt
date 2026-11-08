@@ -3,3 +3,5 @@ pydantic==2.14.2
 pypdf==6.21.4
 python-dotenv==1.2.4
 numpy==2.5.4
+psycopg[binary]==3.3.8
+pgvector==0.5.1

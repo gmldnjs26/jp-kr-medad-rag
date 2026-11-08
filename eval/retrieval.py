@@ -68,6 +68,7 @@ def main():
     ap.add_argument("--rewrite", default="rewrite_v1", help="data/queries/<name>.jsonl")
     ap.add_argument("--fuse", default=None, metavar="EXAMPLES",
                     help="RRF: 「원문 질의 + 예시 벡터(EXAMPLES)」와 「바꿔 쓴 질의 + 원문 벡터」의 순위를 합친다")
+    ap.add_argument("--backend", choices=["db", "npy"], default="db", help="db: pgvector, npy: numpy 전수 비교 (src/retrieve.py)")
     args = ap.parse_args()
 
     load_dotenv(ROOT / ".env")
@@ -84,15 +85,15 @@ def main():
         return [q if kind == "orig" else rw[sid] if kind == "rewrite" else f"{q}\n{rw[sid]}" for sid, q, _ in samples]
 
     if args.fuse:
-        scores = fused_scores(client, queries("orig"), queries("rewrite"), args.fuse)
+        scores = fused_scores(client, queries("orig"), queries("rewrite"), args.fuse, args.backend)
     else:
-        scores = query_scores(client, queries(args.query), args.examples)
+        scores = query_scores(client, queries(args.query), args.examples, args.backend)
     order = np.argsort(-scores, axis=1)  # 전체 순위
 
     # finding마다 「근거 chunk 중 가장 높은 순위」를 구한다
     rows = []
-    for (sid, _, units), rank in zip(samples, order):
-        pos = {int(ci): r for r, ci in enumerate(rank)}
+    for (sid, _, units), rank, sc in zip(samples, order, scores):
+        pos = {int(ci): (r if np.isfinite(sc[ci]) else float("inf")) for r, ci in enumerate(rank)}
         for country, doc, hits in units:
             best = min(hits, key=pos.get)
             rows.append(dict(id=sid, set="기존 g001-g050" if int(sid[1:]) <= 50 else "신규 g051-",
@@ -111,7 +112,7 @@ def main():
         print(f"| {name} | {len(rs)} | " + " | ".join(cells) + " |")
 
     ranks = sorted(r["rank"] for r in rows)
-    print(f"\n순위 중앙값 {ranks[n // 2]}, 최악 {ranks[-1]}")
+    print(f"\n순위 중앙값 {ranks[n // 2]}, 최악 {ranks[-1]}  (inf = db 검색 후보 밖)")
     miss = sorted((r for r in rows if r["rank"] > args.show), key=lambda r: -r["rank"])
     print(f"\n## top-{args.show}에서 놓친 근거 {len(miss)}개")
     for r in miss:

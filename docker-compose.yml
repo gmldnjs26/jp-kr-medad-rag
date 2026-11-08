@@ -1,0 +1,22 @@
+# 로컬 검색 DB. 사용법은 db/README.md
+services:
+  db:
+    build: ./db
+    image: medad-pg:17
+    container_name: medad-pg
+    environment:
+      POSTGRES_DB: medad
+      POSTGRES_USER: medad
+      POSTGRES_PASSWORD: medad   # 로컬 전용
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro   # 볼륨이 비어 있을 때(최초 기동)만 실행된다
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medad -d medad"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  pgdata:
