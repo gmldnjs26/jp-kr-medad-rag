@@ -9,19 +9,22 @@
 | 경로 | 내용 |
 | --- | --- |
 | `docs/design.md` | 설계 (GCP 구성, 지식 소스, 판정 카테고리, Phase 계획) |
-| `data/raw/{kr,jp,cross}/` | 법령·가이드라인·사례집 원문. 각 폴더 `SOURCES.md`에 출처 URL |
-| `data/corpus/core.md` | Phase 1에 통째로 넣는 핵심 자료 묶음 (`src/build_corpus.py`로 생성) |
+| `data/raw/{kr,jp}/` | 검색 대상 원문 13개 (2026-11-07 재선정). 폴더 `SOURCES.md`의 일부 항목은 삭제 전 자료 기준이다 |
+| `data/corpus/core.md` | Phase 1에 통째로 넣은 자료 묶음. 삭제 전 자료로 만든 것이라 지금 원문으로는 다시 만들 수 없다 |
 | `docs/policy.md` | 판정 기준. 모델 프롬프트에 매번 넣고, 정답을 만들 때도 쓴다 |
 | `eval/labeling-guide.md` | 정답 작성 절차 (메타 필드, 목표 분포, 검토 절차) |
-| `eval/golden.jsonl` | 평가셋 50건 (`eval/golden.md`는 읽기용 렌더링) |
+| `eval/golden.jsonl` | 평가셋 223건 (g001~g050 Phase 0, g051~ 새 자료 기반). finding마다 검색 근거 `evidence`. `eval/golden.md`는 읽기용 렌더링 |
 | `src/judge.py` | Gemini 판정 (structured output) |
 | `eval/run_eval.py`, `eval/score.py` | 평가 실행·채점 |
+| `src/chunk.py`, `src/embed.py`, `src/augment.py`, `src/rewrite.py` | Phase 2: 청킹, 임베딩, 청크별 광고 예시(multi-vector), 질의 바꿔 쓰기 |
+| `eval/retrieval.py` | Phase 2 검색 재현율 (`--fuse`: RRF) |
+| `docs/phase2-retrieval-log.md` | Phase 2 검색 개선 기록 |
 
 ## Phase
 
-- **Phase 0**: 라벨링 가이드, 평가셋 50건 ✅
+- **Phase 0**: 라벨링 가이드, 평가셋 50건 ✅ (2026-11-07에 223건으로 확장)
 - **Phase 1**: RAG 없이 core corpus(약 18만 토큰)를 통째로 넣는 long-context baseline ✅
-- **Phase 2**: 직접 만든 RAG (Cloud SQL + pgvector + pg_bigm, Vertex Ranking API, gemini-embedding)
+- **Phase 2**: 직접 만든 RAG. 검색까지 진행 중이다 (RRF 기준 recall@10 74%, 기록은 `docs/phase2-retrieval-log.md`). 저장소는 아직 로컬 numpy
 - **Phase 3**: Vertex AI RAG Engine과 비교
 
 ## Phase 1 결과 (gemini-3.8-flash, 50건)

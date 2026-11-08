@@ -2,3 +2,6 @@
 .env
 __pycache__/
 eval/results/
+data/chunks/*.npy
+data/chunks/old/
+eval/drafts/*.jsonl
