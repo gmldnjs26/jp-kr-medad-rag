@@ -1,4 +1,6 @@
 """golden.jsonl 형식 검증과 분포 통계.
+evidence(2026-11-07~): finding마다 검색 대상 자료 안의 근거 위치. {doc, page, quote} 또는 {doc, ref}.
+근거 자료가 검색 대상에 없으면(표시광고법 등) evidence=[]이고 source_file=null이다.
 
 사용법: python3 eval/validate.py [eval/golden.jsonl]   (프로젝트 루트에서 실행)
 """
@@ -39,8 +41,16 @@ def check(row, errors):
         elif field not in ("title", "description") or span not in row.get(field, ""):
             errors.append(f"{tag}: span {span!r}이 {field}에 글자 그대로 없음")
         src = fd.get("source_file")
-        if not src or not (ROOT / src).exists():
+        ev = fd.get("evidence")
+        if ev is None:
+            errors.append(f"{tag}: 'evidence' 없음")
+        elif src is None and ev:
+            errors.append(f"{tag}: evidence가 있으면 source_file도 있어야 함")
+        if src is not None and not (ROOT / src).exists():
             errors.append(f"{tag}: source_file 없음 {src!r}")
+        for e in ev or []:
+            if not e.get("doc") or not (("page" in e and e.get("quote")) or e.get("ref")):
+                errors.append(f"{tag}: evidence 형식 이상 {e!r}")
         for key in ("rule", "reason", "suggestion"):
             if not fd.get(key):
                 errors.append(f"{tag}: '{key}' 비어 있음")

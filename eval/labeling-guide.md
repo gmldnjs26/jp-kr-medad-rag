@@ -12,6 +12,8 @@
 - `split`: `dev` / `test`. test는 튜닝하는 동안 보지 않는다. 시드는 모두 `dev`.
 - `origin`: 샘플 출처. `synthetic`(가이드라인 예시를 바탕으로 새로 작성), `case_book`(事例解説書 등 사례에서 각색), `real`(실제 등록 데이터, 개인정보·병원명 마스킹).
 - `note`: 판정 근거나 애매한 점.
+- `draft_id`: 에이전트 초안 번호 (g051~, 작성 브리프는 `eval/drafts/BRIEF.md`).
+- finding의 `evidence`: 검색 대상 자료 안의 근거 위치. `{doc, page, quote}`(PDF) 또는 `{doc, ref}`(조문). 청크 번호가 아니라 페이지·인용문으로 적어 청킹을 바꿔도 깨지지 않게 한다. 근거 자료가 검색 대상에 없으면 `[]`이고 `source_file`은 `null`이다.
 
 ## 2. 목표 분포 (100건 기준)
 
