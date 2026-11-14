@@ -22,3 +22,15 @@ CREATE TABLE chunk_vectors (
     embedding vector(768) NOT NULL,
     PRIMARY KEY (chunk_id, kind, model)
 );
+
+-- 청크별 광고 예시 문장 (data/chunks/examples_v3.jsonl). 키워드 검색 C1에서 광고 문구와 비교한다
+CREATE TABLE chunk_examples (
+    chunk_id text NOT NULL REFERENCES chunks(id) ON DELETE CASCADE,
+    idx      int  NOT NULL,
+    text     text NOT NULL,
+    PRIMARY KEY (chunk_id, idx)
+);
+
+-- pg_bigm 인덱스: 2글자 단위로 색인해 LIKE '%단어%'와 유사도 검색을 빠르게 한다
+CREATE INDEX chunks_text_bigm ON chunks USING gin (text gin_bigm_ops);
+CREATE INDEX chunk_examples_text_bigm ON chunk_examples USING gin (text gin_bigm_ops);

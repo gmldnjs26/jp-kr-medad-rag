@@ -23,7 +23,7 @@ sys.path.insert(0, str(ROOT / "src"))
 import judge as judge_mod  # noqa: E402
 from judge import judge, judge_rag, make_cache  # noqa: E402
 from embed import load_chunks  # noqa: E402
-from retrieve import fused_scores  # noqa: E402
+from retrieve import fused_scores, split_scores, split_top  # noqa: E402
 
 
 def main():
@@ -35,6 +35,7 @@ def main():
                     help="Phase 1(--rag 0)에서 통째로 넣는 자료. core_v2.md = 재선정 자료 13개 (src/chunk.py 결과)")
     ap.add_argument("--rag", type=int, default=0, metavar="K", help="Phase 2: 검색 상위 K개 청크만 근거로 판정 (0 = Phase 1)")
     ap.add_argument("--examples", default="examples_v3", help="--rag 검색에 쓰는 예시 벡터")
+    ap.add_argument("--split", action="store_true", help="--rag: 나라별 분리 검색으로 JP·KR 상위 K/2개씩 (src/retrieve.py COUNTRY_CONF)")
     ap.add_argument("--rewrite", default="rewrite_v1", help="--rag 검색에 쓰는 바꿔 쓴 질의 (data/queries/<name>.jsonl)")
     args = ap.parse_args()
 
@@ -45,7 +46,7 @@ def main():
     if args.limit:
         golden = golden[: args.limit]
 
-    run = f"{datetime.datetime.now():%Y%m%d-%H%M%S}_{args.model}" + (f"_rag{args.rag}" if args.rag else f"_{pathlib.Path(args.corpus).stem}")
+    run = f"{datetime.datetime.now():%Y%m%d-%H%M%S}_{args.model}" + (f"_rag{args.rag}{'split' if args.split else ''}" if args.rag else f"_{pathlib.Path(args.corpus).stem}")
     out_dir = ROOT / "eval/results" / run
     out_dir.mkdir(parents=True)
     retrieved = {}
@@ -53,10 +54,13 @@ def main():
         # 검색은 한 번에 (임베딩 배치). 바꿔 쓴 질의는 미리 만든 것을 쓴다 (src/rewrite.py)
         chunks = load_chunks()
         rw = {r["id"]: r["rewrite"] for r in map(json.loads, (ROOT / f"data/queries/{args.rewrite}.jsonl").read_text().splitlines())}
-        scores = fused_scores(client, [f"{g['title']}\n{g['description']}" for g in golden], [rw[g["id"]] for g in golden],
-                              args.examples)
-        for g, row in zip(golden, scores):
-            retrieved[g["id"]] = [chunks[int(i)] for i in row.argsort()[::-1][:args.rag]]
+        qs, rws = [f"{g['title']}\n{g['description']}" for g in golden], [rw[g["id"]] for g in golden]
+        if args.split:
+            tops = split_top(split_scores(client, qs, rws, args.examples), args.rag)
+        else:
+            tops = [row.argsort()[::-1][:args.rag] for row in fused_scores(client, qs, rws, args.examples)]
+        for g, top in zip(golden, tops):
+            retrieved[g["id"]] = [chunks[int(i)] for i in top]
         print(f"run: {run} / {len(golden)}건 / RAG top-{args.rag}")
         cache_name = None
     else:

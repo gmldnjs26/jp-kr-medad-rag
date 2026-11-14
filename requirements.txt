@@ -5,3 +5,4 @@ python-dotenv==1.2.4
 numpy==2.5.4
 psycopg[binary]==3.3.8
 pgvector==0.5.1
+google-cloud-discoveryengine==0.20.7

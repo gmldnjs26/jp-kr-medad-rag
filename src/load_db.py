@@ -9,6 +9,7 @@
   .venv/bin/python src/load_db.py --examples examples_v2
 """
 import argparse
+import json
 import os
 
 import numpy as np
@@ -16,7 +17,7 @@ import psycopg
 from dotenv import load_dotenv
 from pgvector.psycopg import register_vector
 
-from embed import DIM, MODEL, emb_path, load_chunks
+from embed import CHUNKS, DIM, MODEL, emb_path, load_chunks
 
 load_dotenv()
 DB_URL = os.getenv("DATABASE_URL", "postgresql://medad:medad@localhost:5432/medad")
@@ -32,6 +33,8 @@ def main():
     ex = np.load(emb_path(kind=args.examples))
     assert len(chunks) == len(orig) == len(ex), "청크 수와 벡터 행 수가 다르다. embed.py를 다시 돌린다"
     model = f"{MODEL}_{DIM}"
+    ex_text = [json.loads(l) for l in (CHUNKS.parent / f"{args.examples}.jsonl").read_text().splitlines() if l.strip()]
+    assert {e["id"] for e in ex_text} == {c["id"] for c in chunks}, "예시 파일의 id가 chunks.jsonl과 다르다"  # 행 순서는 달라도 된다
 
     vec_rows = []
     for c, o, e in zip(chunks, orig, ex):
@@ -51,8 +54,13 @@ def main():
             cur.executemany(
                 "INSERT INTO chunk_vectors (chunk_id, kind, model, embedding) VALUES (%s, %s, %s, %s)",
                 vec_rows)
+            cur.executemany(
+                "INSERT INTO chunk_examples (chunk_id, idx, text) VALUES (%s, %s, %s)",
+                [(e["id"], i, t) for e in ex_text for i, t in enumerate(e.get("examples") or [])])
             cur.execute("SELECT kind, count(*) FROM chunk_vectors GROUP BY kind ORDER BY kind")
-            print(f"chunks {len(chunks)}", dict(cur.fetchall()))
+            vecs = dict(cur.fetchall())
+            cur.execute("SELECT count(*) FROM chunk_examples")
+            print(f"chunks {len(chunks)}, vectors {vecs}, example sentences {cur.fetchone()[0]}")
 
 
 if __name__ == "__main__":

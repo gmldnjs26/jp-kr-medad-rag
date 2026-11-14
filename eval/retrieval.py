@@ -25,7 +25,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "eval"))
 from embed import load_chunks  # noqa: E402
-from retrieve import fused_scores, query_scores  # noqa: E402
+from retrieve import COUNTRY_CONF, fused_scores, keyword_scores, query_scores, rerank, split_scores  # noqa: E402
 from score import article_match  # noqa: E402
 
 
@@ -68,6 +68,17 @@ def main():
     ap.add_argument("--rewrite", default="rewrite_v1", help="data/queries/<name>.jsonl")
     ap.add_argument("--fuse", default=None, metavar="EXAMPLES",
                     help="RRF: 「원문 질의 + 예시 벡터(EXAMPLES)」와 「바꿔 쓴 질의 + 원문 벡터」의 순위를 합친다")
+    ap.add_argument("--keyword", nargs="*", default=[], choices=["examples", "terms", "terms_jp", "terms_kr"],
+                    help="--fuse에 키워드 검색(pg_bigm)을 더한다. --keyword-only: 키워드 검색 하나만 잰다")
+    ap.add_argument("--keyword-only", choices=["examples", "terms_jp", "terms_kr"])
+    ap.add_argument("--rerank", type=int, default=0, metavar="N", help="검색 상위 N개를 Ranking API로 다시 줄 세운다 (0 = 안 함)")
+    ap.add_argument("--rerank-query", choices=["orig", "rewrite", "both"], default="orig", help="rerank에 넘기는 질의")
+    ap.add_argument("--split", action="store_true",
+                    help="나라별 분리 검색 (src/retrieve.py COUNTRY_CONF). k는 두 나라 합계이고, 각 나라 근거는 그 나라 상위 k/2 안에서 센다")
+    ap.add_argument("--jp-keyword", nargs="*", default=None, help="--split: JP 설정 덮어쓰기")
+    ap.add_argument("--jp-rerank", type=int, default=None)
+    ap.add_argument("--kr-keyword", nargs="*", default=None)
+    ap.add_argument("--kr-rerank", type=int, default=None)
     ap.add_argument("--backend", choices=["db", "npy"], default="db", help="db: pgvector, npy: numpy 전수 비교 (src/retrieve.py)")
     args = ap.parse_args()
 
@@ -78,23 +89,44 @@ def main():
 
     client = genai.Client()
     rw = {}
-    if args.query != "orig" or args.fuse:
+    if args.query != "orig" or args.fuse or args.keyword_only or args.split:
         rw = {r["id"]: r["rewrite"] for r in map(json.loads, (ROOT / f"data/queries/{args.rewrite}.jsonl").read_text().splitlines())}
 
     def queries(kind):
         return [q if kind == "orig" else rw[sid] if kind == "rewrite" else f"{q}\n{rw[sid]}" for sid, q, _ in samples]
 
-    if args.fuse:
-        scores = fused_scores(client, queries("orig"), queries("rewrite"), args.fuse, args.backend)
+    by_country = None
+    if args.split:
+        conf = {c: dict(v) for c, v in COUNTRY_CONF.items()}
+        for c in ("jp", "kr"):
+            if getattr(args, f"{c}_keyword") is not None:
+                conf[c.upper()]["keyword"] = tuple(getattr(args, f"{c}_keyword"))
+            if getattr(args, f"{c}_rerank") is not None:
+                conf[c.upper()]["rerank"] = getattr(args, f"{c}_rerank")
+            conf[c.upper()]["rerank_query"] = args.rerank_query if args.rerank_query != "orig" else conf[c.upper()]["rerank_query"]
+        print("나라별 설정:", conf)
+        by_country = split_scores(client, queries("orig"), queries("rewrite"), args.fuse or "examples_v3", conf)
+        scores = by_country["JP"]  # 아래 공통 경로용. 실제 순위는 나라별 행렬에서 다시 구한다
+    elif args.keyword_only:
+        scores = keyword_scores(queries("orig"), queries("rewrite"), args.keyword_only)
+    elif args.fuse:
+        scores = fused_scores(client, queries("orig"), queries("rewrite"), args.fuse, args.backend, args.keyword)
     else:
         scores = query_scores(client, queries(args.query), args.examples, args.backend)
+    if args.rerank and not args.split:
+        if not rw:
+            rw = {r["id"]: r["rewrite"] for r in map(json.loads, (ROOT / f"data/queries/{args.rewrite}.jsonl").read_text().splitlines())}
+        scores = rerank(queries(args.rerank_query), scores, args.rerank)
     order = np.argsort(-scores, axis=1)  # 전체 순위
 
     # finding마다 「근거 chunk 중 가장 높은 순위」를 구한다
     rows = []
-    for (sid, _, units), rank, sc in zip(samples, order, scores):
+    for qi, ((sid, _, units), rank, sc) in enumerate(zip(samples, order, scores)):
         pos = {int(ci): (r if np.isfinite(sc[ci]) else float("inf")) for r, ci in enumerate(rank)}
         for country, doc, hits in units:
+            if by_country:  # 그 나라 순위표에서 순위를 구한다. 나라별 k/2와 비교하도록 순위를 2배로 센다
+                csc = by_country[country][qi]
+                pos = {int(ci): (2 * r if np.isfinite(csc[ci]) else float("inf")) for r, ci in enumerate(np.argsort(-csc))}
             best = min(hits, key=pos.get)
             rows.append(dict(id=sid, set="기존 g001-g050" if int(sid[1:]) <= 50 else "신규 g051-",
                              country=country, doc=doc, rank=pos[best] + 1, ref=chunks[best]["ref"]))
